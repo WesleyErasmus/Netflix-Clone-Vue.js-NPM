@@ -1,8 +1,7 @@
 <template>
   <div class="home">
-    <!-- Transparent background giving a dark cinema effect -->
-
     <div class="home-page-app-wrapper">
+      <!--REMOVED COMMENTED OUT CSS -- Transparent background giving a dark cinema effect -->
       <div class="cinema-dark-room-effect">
         <!-- Home Page Navbar -->
 
@@ -11,20 +10,20 @@
           <nav class="navbar top-navbar fixed-top">
             <div class="container-fluid top-navbar-inner">
               <div class="app-logo-and-menu-flex-container">
+                <!-- Home page Netflix logo -->
                 <img
                   class="home-gage-app-logo"
                   src="../assets/netflix-logo.png"
                   alt="Netflix Logo"
                 />
+                <!-- Nav buttons, Home, Watch-list, Coming Soon -->
                 <ul class="top-nav-menu-btns">
                   <li class="top-nav-btn top-nav-home-btn">Home</li>
                   <li class="top-nav-btn top-nav-tv-shows-btn">Watch List</li>
                   <li class="top-nav-btn top-nav-movies-btn">Coming Soon</li>
-                  <!-- <li class="top-nav-btn top-nav-new-btn">New & Popular</li>
-                  <li class="top-nav-btn top-nav-my-list-btn">My List</li> -->
                 </ul>
               </div>
-
+              <!-- Nav buttons, Search, User Account -->
               <div class="top-nav-actions-menu">
                 <div class="top-nav-action-item">
                   <div class="-top-search-bar">
@@ -45,34 +44,22 @@
                     </svg>
                   </div>
                 </div>
-                <!-- <div class="top-nav-action-item">
-                  <div class="top-nav-kids-toggle">Kids</div>
-                </div> -->
-                <!-- <div class="top-nav-action-item">
-                  <div class="top-nav-notifications-bell">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="Hawkins-Icon Hawkins-Icon-Standard"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M13 4.57092C16.3922 5.05624 18.9998 7.9736 18.9998 11.5V15.2538C20.0486 15.3307 21.0848 15.4245 22.107 15.5347L21.8926 17.5232C18.7219 17.1813 15.409 17 11.9998 17C8.59056 17 5.27764 17.1813 2.10699 17.5232L1.89258 15.5347C2.91473 15.4245 3.95095 15.3307 4.99978 15.2538V11.5C4.99978 7.97345 7.6076 5.05599 11 4.57086V2H13V4.57092ZM8.62568 19.3712C8.6621 20.5173 10.1509 22 11.9993 22C13.8477 22 15.3365 20.5173 15.373 19.3712C15.38 19.1489 15.1756 19 14.9531 19H9.04555C8.82308 19 8.61862 19.1489 8.62568 19.3712Z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </div>
-                </div> -->
                 <div class="top-nav-action-item">
-                  <div class="top-nav-user-menu">Wesley Erasmus</div>
+                  <!-- Display username -->
+                  <div class="top-nav-user-menu display-name"></div>
                 </div>
-                <span class="sign-out-dropdown"></span>
+                <div class="dropdown">
+                  <span class="sign-out-dropdown"></span>
+                  <div class="dropdown-content">
+                    <!-- Sign-out link to About Page  -->
+                    <router-link :to="{ path: '/about' }">
+                      <button class="home-page-sign-out-btn">Sign out</button>
+                    </router-link>
+                  </div>
+                </div>
               </div>
 
+              <!-- Navbar hamburger button -->
               <button
                 class="navbar-toggler"
                 type="button"
@@ -80,6 +67,7 @@
                 data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar"
               >
+                <!-- Hamburger icon -->
                 <span><i class="fa-solid fa-user"></i></span>
                 <span class="sign-out-dropdown"></span>
               </button>
@@ -89,10 +77,13 @@
                 id="offcanvasNavbar"
                 aria-labelledby="offcanvasNavbarLabel"
               >
+                <!-- Username in Offcanvas header -->
                 <div class="offcanvas-header">
-                  <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
-                    Wesley Erasmus
-                  </h5>
+                  <!-- Display username -->
+                  <h5
+                    class="offcanvas-title"
+                    id="offcanvasNavbarLabel display-name"
+                  ></h5>
                   <button
                     type="button"
                     class="btn-close btn-close-white"
@@ -100,6 +91,7 @@
                     aria-label="Close"
                   ></button>
                 </div>
+                <!-- Offcanvas body menu-->
                 <div class="offcanvas-body">
                   <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
@@ -125,36 +117,8 @@
                     <li class="nav-item">
                       <a class="nav-link" href="#"></a>
                     </li>
-                    <!-- <li class="nav-item dropdown">
-                      <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        id="offcanvasNavbarDropdown"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        Dropdown
-                      </a>
-                      <ul
-                        class="dropdown-menu"
-                        aria-labelledby="offcanvasNavbarDropdown"
-                      >
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li>
-                          <a class="dropdown-item" href="#">Another action</a>
-                        </li>
-                        <li>
-                          <hr class="dropdown-divider" />
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="#"
-                            >Something else here</a
-                          >
-                        </li>
-                      </ul>
-                    </li> -->
                   </ul>
+                  <!-- Offcanvas search bar -->
                   <form class="d-flex" role="search">
                     <input
                       class="form-control me-2"
@@ -172,74 +136,7 @@
           </nav>
         </div>
         <!-- End of Bootstrap Navbar -->
-        <!-- 
-        <header class="home-page-top-menu">
-          <nav class="top-navbar">
-            <div class="top-navbar-inner">
-              <div class="top-nav-netflix-logo">
-                <img
-                  class="app-logo"
-                  src="../assets/netflix-logo.png"
-                  alt="Netflix Logo"
-                />
-              </div>
-              <ul class="top-nav-menu-btns">
-                <li class="top-nav-btn top-nav-home-btn">Home</li>
-                <li class="top-nav-btn top-nav-tv-shows-btn">TV Shows</li>
-                <li class="top-nav-btn top-nav-movies-btn">Movies</li>
-                <li class="top-nav-btn top-nav-new-btn">New & Popular</li>
-                <li class="top-nav-btn top-nav-my-list-btn">My List</li>
-              </ul>
-            </div>
-            <div class="top-nav-actions-menu">
-              <div class="top-nav-action-item">
-                <div class="-top-search-bar">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="search-icon"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M13 11C13 13.7614 10.7614 16 8 16C5.23858 16 3 13.7614 3 11C3 8.23858 5.23858 6 8 6C10.7614 6 13 8.23858 13 11ZM14.0425 16.2431C12.5758 17.932 10.4126 19 8 19C3.58172 19 0 15.4183 0 11C0 6.58172 3.58172 3 8 3C12.4183 3 16 6.58172 16 11C16 11.9287 15.8417 12.8205 15.5507 13.6497L24.2533 18.7028L22.7468 21.2972L14.0425 16.2431Z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-              <div class="top-nav-action-item">
-                <div class="top-nav-kids-toggle">Kids</div>
-              </div>
-              <div class="top-nav-action-item">
-                <div class="top-nav-notifications-bell">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="Hawkins-Icon Hawkins-Icon-Standard"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M13 4.57092C16.3922 5.05624 18.9998 7.9736 18.9998 11.5V15.2538C20.0486 15.3307 21.0848 15.4245 22.107 15.5347L21.8926 17.5232C18.7219 17.1813 15.409 17 11.9998 17C8.59056 17 5.27764 17.1813 2.10699 17.5232L1.89258 15.5347C2.91473 15.4245 3.95095 15.3307 4.99978 15.2538V11.5C4.99978 7.97345 7.6076 5.05599 11 4.57086V2H13V4.57092ZM8.62568 19.3712C8.6621 20.5173 10.1509 22 11.9993 22C13.8477 22 15.3365 20.5173 15.373 19.3712C15.38 19.1489 15.1756 19 14.9531 19H9.04555C8.82308 19 8.61862 19.1489 8.62568 19.3712Z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-              <div class="top-nav-action-item">
-                <div class="top-nav-user-menu">Wesley Erasmus</div>
-              </div>
-              <span class="sign-out-dropdown"></span>
-            </div>
-          </nav>
-        </header> -->
+
         <!-- Home page hero image carousel -->
         <section class="hero-image-trailer-wrapper">
           <!-- BOOTSTRAP CAROUSEL -->
@@ -336,41 +233,36 @@
               ></span>
               <span class="visually-hidden">Next</span>
             </button>
+            <!-- Coming soon watermark -->
+
+            <span class="coming-soon-watermark"> COMING SOON</span>
           </div>
           <!-- END OF BOOTSTRAP CAROUSEL -->
 
-          <div class="hero-image-trailer">
-            <!-- <img
-            class="hero-static-image"
-            src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABRXM8JbVMT0QdVT9zM99-LIKCdYyF68UL6oaeib1PU8CtEHAoreOb_svxhhqlUhifqNUSca0slwMr2wGxUm-xptEKAENYfRXLjWs.webp?r=94a"
-            alt=""
-          /> -->
-            <!-- <img
-              class="hero-static-image"
-              src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABQCMBLtcppxXsD6dBXpwWTPLWCmvk89ihfn0kKjhxUVPmcUZdgzeDdzrIAW6UGUYDI61C5Ee8ocx8dsDy6IZ3dqNsnGqnCJ9ImDS.webp?r=763"
-              alt=""
-            /> -->
-          </div>
-
-          <span class="coming-soon-watermark">COMING SOON</span>
-
+          <!-- Watch-list heading -->
           <h1 class="my-list-heading">My Watch List</h1>
         </section>
+        <!-- Container for movies and page footer - used to simplify screen responsiveness -->
         <div class="movies-and-footer-container">
           <!-- .watch-list-movie-slider-wrapper -->
           <section class="watch-list-movie-slider-wrapper">
-            <button class="watch-list-slider-handles watch-list-handle-prev">
+            <!-- Watch-list prev button -->
+            <button
+              class="watch-list-slider-handles sliderHandles watch-list-handle-prev prevHandle"
+            >
               <div class="watch-list-handle-prev-icon">
                 <i class="fa-solid fa-chevron-left"></i>
               </div>
             </button>
-            <div class="watch-list-movie-slider-container">
-              <!-- <button class="watch-list-slider-handles watch-list-handle-prev">
-                <div class="watch-list-handle-prev-icon">
-                  <i class="fa-solid fa-chevron-left"></i>
-                </div>
-              </button> -->
-              <div class="watch-list-movie-slider">
+            <div class="watch-list-movie-slider-container sliderContainer">
+              <!-- Watch-list movie slider with next and prev button -->
+              <div class="watch-list-movie-slider movieSlider">
+                <!-- Attempt to push movies to the watch-list array -->
+                <!-- <div class="output" v-for="item in movies" v-bind:key="item.id">
+                  {{ watchList }}
+                </div> -->
+
+                <!-- WATCH-LIST PLACEHOLDER IMAGES -->
                 <img
                   class="watch-list-slider-item movie-thumbnail-placeholder"
                   src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABVIROzcqdItj5G9tBvl7dEXkUHGYaKBTLREXzIXnZtTu61dvtMyQkwtbLHvmZ3krX8El84GfXZmIRIg5ybGIk4ydFbmEMYPNstvhsO0Nr4GX6i73RSZ6YpyFz85GWztIqNFkSBs8ozAFgG-7REV0ufj2ebVxYCH9k6oc5fx1p3CPYLzVl6CPrvkc0OK1mY7bc4pR.jpg?r=8ba"
@@ -437,16 +329,18 @@
                   alt=""
                 />
               </div>
-              <button class="watch-list-slider-handles watch-list-handle-next">
+              <!-- Watch-list next button -->
+              <button
+                class="watch-list-slider-handles sliderHandles watch-list-handle-next nextHandle"
+              >
                 <div class="watch-list-handle-next-icon">
                   <i class="fa-solid fa-chevron-right"></i>
                 </div>
               </button>
             </div>
           </section>
-          <h1 class="slider-heading">
-            Enjoy a Wide Selection of the Latest Movies and TV Shows
-          </h1>
+          <!-- Movies container heading -->
+          <h1 class="slider-heading">Watch the Latest Movies and TV Shows</h1>
           <!-- Movie Slider container -->
           <section class="movie-slider-wrapper">
             <!-- Movie item -->
@@ -456,7 +350,14 @@
               v-bind:key="item.id"
             >
               <!-- Movie img -->
-              <img class="slider-img" :src="item.image" alt="Movie Poster" />
+              <img
+                class="slider-img"
+                :class="{ watchListSliderItem: poof }"
+                :src="item.image"
+                alt="Movie Poster"
+              />
+              <!-- Add to watch-list button -->
+              <button v-on:click="(poof = !poof), addToWatchList">Add</button>
               <!-- Movie title -->
               <div class="name">Title: {{ item.name }}</div>
               <!-- Movie description -->
@@ -464,9 +365,30 @@
               <!-- Movie release date -->
               <div class="date">Release Date: {{ item.release_date }}</div>
             </span>
+
+            <!-- <span class="movie-slider-item"  v-for="item in movies"
+              v-bind:key="item.id">
+              
+              <img :src="item.image" class="slider-img" alt="Movie Poster" />
+
+              <div >
+                <button href="#" class="btn btn-primary">Add to Watch List</button>
+                <h5 >{{ item.name }}</h5>
+                <div >
+                  Duration: 
+                  {{ item.duration }}
+                </div>
+                <div class="card-text">
+                  Released: 
+                  {{ item.release_date }}
+                </div>
+                
+              </div>
+            </span> -->
           </section>
           <!-- Home page footer -->
           <footer class="home-page-footer">
+            <!-- Home page footer links -->
             <ul class="footer-links">
               <li class="footer-link-item">Audio and Subtitles</li>
               <li class="footer-link-item">Audio Description</li>
@@ -484,62 +406,137 @@
             </ul>
           </footer>
         </div>
+        <!-- End of Movies and Footer container -->
       </div>
-      <!-- End of app-wrapper -->
+      <!-- End of Cinema dark room effect container -->
     </div>
+    <!-- End of home-page-app-wrapper -->
   </div>
 </template>
 
 <script>
-import axios from "axios";
+// CodeSpace API import
+// import axios from "axios";
 export default {
-  name: "MovieList",
   data() {
     return {
-      movies: [],
+      watchList: [],
+      // Poof used to test functions
+      poof: false,
+      movies: [
+        {
+          id: 6,
+          name: "Mrs. Annalise Kuhic V",
+          duration: "193",
+          image: "https://picsum.photos/200/300",
+          description:
+            "Dolore consectetur sunt laboriosam odit libero. Qui qui quia dolor deserunt cum omnis vitae. Rem corrupti qui excepturi facilis. Vel blanditiis molestiae minima non magnam aut corrupti.",
+          release_date: "2016-02-26",
+          is_coming_soon: 0,
+          rating: 8,
+          watchList: true,
+        },
+        {
+          id: 49,
+          name: "Orville Miller",
+          duration: "189",
+          image: "https://picsum.photos/200/300",
+          description:
+            "Atque sit aut vitae aut quia ut ad. Fuga veritatis est beatae qui sapiente. Consequatur impedit molestiae harum ea iusto. Quia assumenda eum qui.",
+          release_date: "2022-09-29",
+          is_coming_soon: 1,
+          rating: 9,
+          watchList: true,
+        },
+        {
+          id: 82,
+          name: "Dr. Deontae Feeney MD",
+          duration: "145",
+          image: "https://picsum.photos/200/300",
+          description:
+            "Illum debitis consequatur enim expedita non neque ea. Ut soluta vel doloremque nisi. Tenetur saepe iure vero voluptatibus illo quis modi. Velit minima ea sed dolorem. Saepe ducimus in quas sit assumenda odio qui.",
+          release_date: "2023-02-16",
+          is_coming_soon: 1,
+          rating: 5,
+          watchList: true,
+        },
+        {
+          id: 89,
+          name: "Ms. Era Davis",
+          duration: "186",
+          image: "https://picsum.photos/200/300",
+          description:
+            "Ullam repellendus vero assumenda nulla sit est. Incidunt odio eaque adipisci ut beatae. Eaque minima ut ut id.",
+          release_date: "2022-03-16",
+          is_coming_soon: 1,
+          rating: 7,
+          watchList: true,
+        },
+      ],
     };
   },
-  mounted() {
-    axios
-      .get("https://project-apis.codespace.co.za/api/movies")
-      .then((response) => {
-        this.movies = response.data.data;
-        console.warn(response);
-      });
-  },
+
+  // methods: {
+  // IN PROGRESS -- Method to push movies to watch-list-array
+  // addToWatchList() {
+  //   this.$set(this.item.image);
+  //   // this.watchList.push(item);
+  // },
+  // },
+  // CodeSpace API import using axios
+  // mounted() {
+  //   axios
+  //     .get("https://project-apis.codespace.co.za/api/movies")
+  //     .then((response) => {
+  //       this.movies = response.data.data;
+  //       console.warn(response);
+  //     });
+  // },
 };
 </script>
 
 <style lang="scss">
+// Test style for Poof - method testing
+.vanish {
+  visibility: hidden;
+}
+
 // Google font import
 @import url("https://fonts.googleapis.com/css2?family=Arimo&family=Open+Sans&display=swap");
 // Font-families
 /* font-family: 'Arimo', sans-serif;
 font-family: 'Open Sans', sans-serif; */
+
 .home {
+  // ???
 }
 
+// CSS root variables
 :root {
   --primary-color: #e50914;
   --transparent-black-bg: rgba(0, 0, 0, 0.75);
 }
 
+// Universal placeholder styling
 ::placeholder {
   font-size: 16px;
 }
 
+// Universal selector styling
 *,
 *::after,
 *::before {
   box-sizing: border-box;
 }
 
+// Universal ul styling
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+// Universal a tag styling
 a {
   color: #fff;
   cursor: pointer;
@@ -556,24 +553,14 @@ body {
   font-size: 16px;
 }
 
-.cinema-dark-room-effect::after {
-  content: "";
-  position: absolute;
-  background: linear-gradient(77deg, rgba(0, 0, 0, 0.6), transparent 85%);
-  top: 0;
-  left: 0;
-  height: 100%;
-  opacity: 1;
-  right: 0;
-  z-index: 10;
-}
-
+// App container
 .home-page-app-wrapper {
   position: relative;
   margin: 0;
   padding: 0;
 }
 
+// Pseudo element used to cover coming soon carousel images
 .home-page-app-wrapper::after {
   content: "";
   position: absolute;
@@ -586,54 +573,13 @@ body {
   z-index: 1;
 }
 
-.carousel-slide {
-}
-
-.carousel-indicators {
-  bottom: 15vh;
-  z-index: 11;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-  z-index: 11;
-  display: none;
-}
-
-// .carousel-inner {
-
-// }
-
-// .carousel-item {
-
-// }
-
-// Img class
-// .d-block {
-// }
-
-.carousel-caption {
-  z-index: 11;
-}
-
-.carousel-caption h5 {
-  display: none;
-}
-
-.carousel-caption p {
-  display: none;
-}
-
-.hero-image-trailer-wrapper {
-  position: relative;
-}
-
+/* NAVBAR */
 .home-page-top-menu {
   position: relative;
   z-index: 11;
 }
 
-/* NAVBAR */
+// Home page navbar background and styling
 .top-navbar {
   background-image: linear-gradient(
     180deg,
@@ -648,20 +594,24 @@ body {
   z-index: 2;
 }
 
+// Home page flex container
 .app-logo-and-menu-flex-container {
   display: flex;
   align-items: center;
 }
 
+// Navbar menu font size
 .top-navbar-inner {
   font-size: 14px;
 }
 
+// Home page Netflix logo
 .home-gage-app-logo {
   height: 25px;
   margin-right: 25px;
 }
 
+// Top navbar menu buttons
 .top-nav-menu-btns {
   display: flex;
   align-items: center;
@@ -669,6 +619,7 @@ body {
   padding: 0;
 }
 
+// Search icon and user account styling
 .top-nav-actions-menu {
   display: flex;
   margin-left: 18px;
@@ -676,27 +627,32 @@ body {
   color: #fff;
 }
 
+// Menu button items
 .top-nav-btn {
   display: block;
   margin-left: 18px;
 }
 
+// Home button font styling
 .top-nav-home-btn {
   color: #fff;
   font-weight: 700;
 }
 
+// Styling for Navbar search icon and account holder name
 .top-nav-actions-menu {
   height: 100%;
   right: 4%;
   top: 0;
 }
 
+// Styling for Navbar search icon and account holder name
 .top-nav-action-item {
   display: block;
   margin-left: 15px;
 }
 
+// Top nav username dropdown
 .sign-out-dropdown {
   border-color: #fff transparent transparent;
   border-style: solid;
@@ -706,37 +662,102 @@ body {
   top: 6px;
 }
 
+.home-page-sign-out-btn {
+  background: rgba(0, 0, 0, 0.75);
+  color: #e5e5e5;
+  width: 70px;
+  text-decoration: underline;
+  z-index: 1;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  position: absolute;
+  right: -3vw;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 1vw 2vw;
+  display: none;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+// Top navbar hamburger button [hidden]
 .navbar-toggler {
   display: none;
 }
 
+// Top navbar hamburger icon
 .fa-user {
   color: #e5e5e5;
 }
 
+// Styling to override navbar link font color
 .nav-link {
   color: #fff !important;
 }
 
+// Offcanvas navbar background
 .offcanvas {
-    background-color: transparent !important;
-    background: rgba(0, 0, 0, .75);
-    border: none;
+  background-color: transparent !important;
+  background: rgba(0, 0, 0, 0.75);
+  border: none;
 }
 
+// Offcanvas body background image
 div.offcanvas-body {
   z-index: 20 !important;
-    background-color: transparent !important;
-    background-image: linear-gradient(
+  background-color: transparent !important;
+  background-image: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.7) 10%,
     transparent
   );
 }
 
-.btn-outline-success{
-    color: #fff;
-    border-color: #fff;
+// Offcanvas search button styling
+.btn-outline-success {
+  color: #fff;
+  border-color: #fff;
+}
+
+// HOME PAGE CAROUSEL STYLING
+// Clickable carousel indicators. Indicating number of slides and slide position (located next to watch-list heading)
+// #carouselExampleCaptions {
+//   z-index: 100;
+// }
+
+.carousel-indicators {
+  bottom: 14vh;
+  z-index: 11;
+}
+
+// Carousel buttons [hidden]
+.carousel-control-prev,
+.carousel-control-next {
+  z-index: 11;
+  display: none;
+}
+
+// Carousel header [hidden]
+.carousel-caption h5 {
+  display: none;
+}
+
+// Carousel description [hidden]
+.carousel-caption p {
+  display: none;
+}
+
+// Coming soon hero image container
+.hero-image-trailer-wrapper {
+  position: relative;
 }
 
 /* PAGE HERO IMAGE */
@@ -745,27 +766,29 @@ div.offcanvas-body {
   width: 100%;
 }
 
+// Coming Soon Watermark
 .coming-soon-watermark {
-  /* CHANGE FONT SIZE and Position TO BE RESPONSIVE */
-  font-size: calc(16px + 4vw);
-  font-weight: bold;
+  background: #e50914d1;
   position: absolute;
+  text-align: center;
+  padding: 0.6% 0.8%;
+  font-size: calc(12px + 3.2vw);
+  margin: 0;
+  font-weight: bold;
+  bottom: 51%;
+  left: 4%;
+  opacity: 0.75;
   z-index: 11;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  top: 30%;
-  padding: 0 4%;
+  border-radius: 0.15rem;
 }
 
 // Container for Movies and footer - used to align all content below the static hero image
 .movies-and-footer-container {
   position: relative;
-  top: -15vh;
+  top: -14vh;
 }
 
-// MOVIES LIST - TEMP STYLING
+// MOVIES LIST - TEMP STYLING [hidden]
 .name,
 .desc,
 .date {
@@ -774,11 +797,12 @@ div.offcanvas-body {
   // background-color: #496583;
 }
 
+// MOVIES LIST - TEMP STYLING [hidden]
 .date {
   margin-bottom: 15px;
 }
 
-/* Movie Slider */
+/* Watch List Movie Slider */
 .watch-list-movie-slider-wrapper {
   position: relative;
   z-index: 3;
@@ -786,9 +810,9 @@ div.offcanvas-body {
   margin: 0 auto;
 }
 
+/* Netflix background to blend slider with hero image */
 .watch-list-movie-slider-container,
 .watch-list-movie-slider {
-  /* Netflix background to blend slider with hero image */
   background-color: transparent;
   background-image: linear-gradient(
     180deg,
@@ -808,6 +832,7 @@ div.offcanvas-body {
   width: 100%;
 }
 
+// Container used to position watch list movies (spacing to the left)
 .watch-list-movie-slider-container {
   display: flex;
   overflow: hidden;
@@ -817,6 +842,7 @@ div.offcanvas-body {
   padding: 0 4%;
 }
 
+// Variables and styling used to measure watch list items sizing and items displayed per screen size (change no. of items displayed according to media queries) [Media queries located at the bottom of styles]
 .watch-list-movie-slider {
   display: flex;
   flex-grow: 1;
@@ -828,7 +854,10 @@ div.offcanvas-body {
   transition: transform 250ms ease-in-out;
 }
 
-.watch-list-slider-item {
+// Watch list movie item
+.watch-list-slider-item,
+// watchListSliderItem class used to test methods
+.watchListSliderItem {
   aspect-ratio: 16 / 9;
   padding: 0 0.1vw;
   display: flex;
@@ -839,7 +868,9 @@ div.offcanvas-body {
   width: 16.6666667%;
 }
 
-.watch-list-slider-handles {
+// Watch-list next and prev buttons
+.watch-list-slider-handles,
+.sliderHandles {
   border: none;
   margin: 0 0 0.2vw;
   padding: 0;
@@ -858,6 +889,7 @@ div.offcanvas-body {
   height: 100%;
 }
 
+// Watch-list next and prev buttons [prev]
 .watch-list-handle-prev {
   position: absolute;
   width: 4%;
@@ -865,6 +897,7 @@ div.offcanvas-body {
   border-bottom-left-radius: 0;
 }
 
+// Watch-list next and prev buttons [next]
 .watch-list-handle-next {
   position: absolute;
   right: 0;
@@ -873,8 +906,8 @@ div.offcanvas-body {
   border-bottom-right-radius: 0;
 }
 
+/* Used Netflix background styling to blend watch-list slider with hero image [Adds Shadow Effect] */
 .movie-slider-wrapper {
-  /* Netflix background to blend slider with hero image */
   background-color: transparent;
   background-image: linear-gradient(
     180deg,
@@ -904,15 +937,7 @@ div.offcanvas-body {
   width: 100vw;
 }
 
-// MOVE SIZING BY IMAGE TO SIZE BY MOVIE CARD
-// .movie-slider-item {
-//   aspect-ratio: 16 / 9;
-//   padding: 0 0.1vw;
-//   margin: 0.5vw 0;
-//   max-width: calc(100% / var(--items-per-screen));
-//   width: 16.6666667%;
-// }
-
+// Movie images styling
 .slider-img {
   aspect-ratio: 16 / 9;
   padding: 0 0.1vw;
@@ -922,22 +947,22 @@ div.offcanvas-body {
   width: 16.6666667%;
 }
 
+// Watch list heading
 .my-list-heading {
   /* Using calc to dynamically set font size with a min font size of 12px */
-  font-size: calc(12px + 1vw);
+  font-size: calc(8px + 1.2vw);
   position: absolute;
-  bottom: 15vh;
+  bottom: 14vh;
   padding: 0 4%;
   z-index: 11;
   color: #e5e5e5;
   margin-bottom: 0.6rem;
 }
 
+// Movies container Heading
 .slider-heading {
   position: relative;
-  // SWAPPING TO CONTAINER POSITIONING INSTEAD OF INDIVIDUAL COMPONENT POSITIONING
-  // top: -15vh;
-  font-size: calc(12px + 1vw);
+  font-size: calc(8px + 1.2vw);
   z-index: 100;
   color: #e5e5e5;
   margin-bottom: 0.6rem;
@@ -947,8 +972,6 @@ div.offcanvas-body {
 /* Home page footer */
 .home-page-footer {
   position: relative;
-  // SWAPPING TO CONTAINER POSITIONING INSTEAD OF INDIVIDUAL COMPONENT POSITIONING
-  // top: 3vh;
   max-width: 980px;
   color: grey;
   margin: 0 auto;
@@ -956,6 +979,7 @@ div.offcanvas-body {
   z-index: 11;
 }
 
+// Home page footer items container
 .footer-links {
   display: flex;
   flex-direction: row;
@@ -965,66 +989,82 @@ div.offcanvas-body {
   padding: 0;
 }
 
+// Home page footer items
 .footer-link-item {
   flex-basis: 25%;
   flex: 0 0 33%;
   margin-bottom: 16px;
 }
 
-// Media queries
+// MEDIA QUERIES
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .my-list-heading {
+    bottom: 10vh;
+  }
+
+  .carousel-indicators {
+    bottom: 10vh;
+  }
+
+  .movies-and-footer-container {
+    top: -10vh;
+  }
+}
+
 @media screen and (min-width: 1281px) and (max-width: 1600px) {
+  .home-page-app-wrapper::after {
+    height: 58%;
+  }
+
   .top-navbar {
     height: 68px;
     font-size: 14px;
   }
 
-   .top-navbar {
-    height: 68px;
-    font-size: 14px;
-  }
-
-  .watch-list-movie-slider {
-    --items-per-screen: 5;
-  }
-
-  .watch-list-slider-item {
-    width: 20%;
-  }
-
+  .watch-list-movie-slider,
   .movie-slider-item {
     --items-per-screen: 5;
   }
 
+  .my-list-heading {
+    bottom: 10vh;
+  }
+
+  .watch-list-slider-item,
   .slider-img {
     width: 20%;
   }
 
-  .home-page-app-wrapper {
-    position: relative;
-    margin: 0;
-    padding: 0;
+  .carousel-indicators {
+    bottom: 10vh;
   }
 
-  .home-page-app-wrapper::after {
-    height: 19%;
+  .movies-and-footer-container {
+    top: -10vh;
   }
 }
 
 @media screen and (min-width: 841px) and (max-width: 1280px) {
-  //  Remove duplicate code:
-  //  .watch-list-movie-slider . watch-list-slider-item
+  .home-page-app-wrapper::after {
+    height: 50.5%;
+  }
 
   .top-navbar {
     height: 68px;
     font-size: 14px;
   }
 
-   .navbar-toggler {
+  .navbar-toggler {
     display: block;
   }
 
-  .top-nav-actions-menu, .top-nav-menu-btns {
+  .top-nav-actions-menu,
+  .top-nav-menu-btns {
     display: none;
+  }
+
+  .my-list-heading {
+    bottom: 9vh;
   }
 
   .watch-list-movie-slider,
@@ -1037,49 +1077,41 @@ div.offcanvas-body {
     width: 25%;
   }
 
-  .movies-and-footer-container {
-    top: -10vh;
-  }
-
-  .my-list-heading {
-    bottom: 10vh;
-  }
-
-  .home-page-app-wrapper {
-    position: relative;
-    margin: 0;
-    padding: 0;
-  }
-
-  .home-page-app-wrapper::after {
-    height: 14.8%;
-  }
-
   .carousel-indicators {
-    bottom: 10vh;
+    bottom: 9vh;
+  }
+
+  .movies-and-footer-container {
+    top: -9vh;
   }
 }
 
 @media screen and (min-width: 481px) and (max-width: 840px) {
+  .home-page-app-wrapper::after {
+    height: 49%;
+  }
+
   .top-navbar {
     height: 68px;
     font-size: 14px;
   }
 
-   .navbar-toggler {
+  .navbar-toggler {
     display: block;
   }
 
-  .top-nav-menu-btns, .top-nav-actions-menu {
+  .top-nav-menu-btns,
+  .top-nav-actions-menu {
     display: none;
   }
 
-  .top-navbar {
-    height: 68px;
-    font-size: 14px;
+  .carousel-indicators {
+    bottom: 2vh;
   }
 
-  
+  .my-list-heading {
+    bottom: 2vh;
+  }
 
   .watch-list-movie-slider,
   .movie-slider-item {
@@ -1099,77 +1131,47 @@ div.offcanvas-body {
   .movies-and-footer-container {
     top: -2vh;
   }
-
-  .my-list-heading {
-    bottom: 2vh;
-  }
-
-  .home-page-app-wrapper {
-    position: relative;
-    margin: 0;
-    padding: 0;
-  }
-
-  .home-page-app-wrapper::after {
-    height: 8.9%;
-  }
-
-  .carousel-indicators {
-    bottom: 2vh;
-  }
-
 }
 
 @media screen and (min-width: 0) and (max-width: 480px) {
+  .home-page-app-wrapper::after {
+    height: 31.5%;
+  }
+
   .top-navbar {
     height: 68px;
     font-size: 14px;
   }
 
-   .navbar-toggler {
+  .navbar-toggler {
     display: block;
   }
 
-  .top-nav-actions-menu, .top-nav-menu-btns {
+  .top-nav-actions-menu,
+  .top-nav-menu-btns {
     display: none;
   }
 
-  .watch-list-movie-slider {
-    --items-per-screen: 2;
+  .carousel-indicators {
+    bottom: 0vh;
   }
 
-  .watch-list-slider-item {
-    width: 50%;
+  .my-list-heading {
+    bottom: 2vh;
   }
 
+  .watch-list-movie-slider,
   .movie-slider-item {
     --items-per-screen: 2;
   }
 
+  .watch-list-slider-item,
   .slider-img {
     width: 50%;
   }
 
   .movies-and-footer-container {
     top: -2vh;
-  }
-
-  .my-list-heading {
-    bottom: 2vh;
-  }
-
-  .home-page-app-wrapper {
-    position: relative;
-    margin: 0;
-    padding: 0;
-  }
-
-  .home-page-app-wrapper::after {
-    height: 20%;
-  }
-
-  .carousel-indicators {
-    bottom: 0vh;
   }
 }
 </style>
