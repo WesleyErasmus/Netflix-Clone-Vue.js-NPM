@@ -277,22 +277,21 @@
         <section class="movie-slider-container row">
           <!-- Movie item -->
 
-          <div
-            class="card"
-            style="width: 18rem"
-            v-for="item in movies"
-            v-bind:key="item.id"
-          >
+          <div class="card" v-for="item in movies" v-bind:key="item.id">
             <img :src="item.image" class="card-img-top" alt="Movie Poster" />
+            <div class="image-fade"></div>
             <div class="card-body">
+              <button
+                class="watch-list-add-btn"
+                v-on:click="addToWatchList(item)"
+              >
+                <i class="fa-solid fa-plus"></i>
+              </button>
               <h5 class="card-title">{{ item.name }}</h5>
               <p class="card-text">
                 <span>Duration: </span> {{ item.duration }}
                 <span>Release Date: </span> {{ item.release_date }}
               </p>
-              <button class="btn btn-primary" v-on:click="addToWatchList(item)">
-                <i class="fa-solid fa-plus"></i>
-              </button>
             </div>
           </div>
           <!-- <span
@@ -1429,7 +1428,8 @@ div.offcanvas-body {
   transition: transform 250ms ease-in-out;
 }
 
-Watch list movie item .watch-list-slider-item {
+// Watch list movie item
+.watch-list-slider-item {
   aspect-ratio: 16 / 9;
   padding: 0 0.1vw;
   display: flex;
@@ -1508,6 +1508,7 @@ Watch list movie item .watch-list-slider-item {
   border-radius: 0.25rem;
   padding: 0 0.1vw;
   margin: 0.25vw 0.25vw;
+  width: 16.6666667%;
 }
 
 .card-img-top {
@@ -1517,7 +1518,46 @@ Watch list movie item .watch-list-slider-item {
   // cursor: pointer;
 }
 
+.image-fade {
+  background-color: transparent;
+  background-image: linear-gradient(
+    180deg,
+    hsla(0, 0%, 8%, 0) 0,
+    hsla(0, 0%, 8%, 0.15) 15%,
+    hsla(0, 0%, 8%, 0.35) 29%,
+    hsla(0, 0%, 8%, 0.442) 44%,
+    #1414146b 68%,
+    #14141411
+  );
+  background-position: 0 top;
+  background-repeat: repeat-x;
+  background-size: 100% 100%;
+  bottom: -1px;
+  opacity: 1;
+  position: absolute;
+  width: 100%;
+  height: 2vh;
+  top: 13.5vh;
+}
+
 .card-body {
+  background-color: transparent;
+  background-image: linear-gradient(
+    180deg,
+    hsla(0, 0%, 8%, 0) 0,
+    hsla(0, 0%, 8%, 0.15) 15%,
+    hsla(0, 0%, 8%, 0.35) 29%,
+    hsla(0, 0%, 8%, 0.58) 44%,
+    #141414 68%,
+    #141414
+  );
+  background-position: 0 top;
+  background-repeat: repeat-x;
+  background-size: 100% 100%;
+  bottom: -1px;
+  opacity: 1;
+  top: auto;
+  padding: 0.1vw 0.2vw;
 }
 
 .card-title {
@@ -1528,15 +1568,33 @@ Watch list movie item .watch-list-slider-item {
   font-size: calc(8px + 0.5vw);
 }
 
-.movie-slider-item-btn {
+.watch-list-add-btn {
+  position: relative;
+  float: right;
   // display: none;
   color: #fff;
-  background: rgb(37, 37, 37);
-  position: relative;
+  background: none;
+  border: none;
 }
+
+// .btn-primary,
+// .btn.btn::active {
+//   border: none;
+//   outline: none;
+//   background: none;
+// }
+
+// .btn-primary,
+// .btn::after {
+//   border: none;
+//   outline: none;
+//   background: none;
+// }
 
 .fa-plus {
   color: #fff;
+  font-size: calc(14px + 0.6vw);
+  // font-weight: 500;
 }
 
 // Watch list heading
