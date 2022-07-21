@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
+import ComingSoonView from "../views/ComingSoonView.vue";
 
 const routes = [
   {
@@ -15,6 +16,12 @@ const routes = [
     name: "about",
     component: AboutView,
   },
+  {
+    // this will be my Coming Soon page - change names accordingly
+    path: "/comingsoon",
+    name: "comingsoon",
+    component: ComingSoonView,
+  },
 ];
 
 const router = createRouter({
@@ -24,7 +31,7 @@ const router = createRouter({
 
 export default router;
 
-// Watch-list slider handles
+// // Watch-list slider handles
 document.addEventListener("click", (e) => {
   let handle;
   if (e.target.matches(".sliderHandles")) {
@@ -43,9 +50,9 @@ function onHandleClick(handle) {
     getComputedStyle(slider).getPropertyValue("--slider-index")
   );
   if (handle.classList.contains("nextHandle")) {
-    slider.style.setProperty("--slider-index", sliderIndex - 1);
+    slider.style.setProperty("--slider-index", sliderIndex + 1);
   }
   if (handle.classList.contains("prevHandle")) {
-    slider.style.setProperty("--slider-index", sliderIndex + 1);
+    slider.style.setProperty("--slider-index", sliderIndex - 1);
   }
 }

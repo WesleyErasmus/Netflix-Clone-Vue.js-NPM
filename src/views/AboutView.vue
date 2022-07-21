@@ -2,11 +2,13 @@
   <div class="about">
     <div class="login-page-bg">
       <header>
-        <img
-          class="app-logo"
-          src="../assets/netflix-logo.png"
-          alt="Netflix Logo"
-        />
+        <router-link :to="{ path: '/' }">
+          <img
+            class="app-logo"
+            src="../assets/netflix-logo.png"
+            alt="Netflix Logo"
+          />
+        </router-link>
       </header>
 
       <div class="login-form-wrapper">
@@ -14,6 +16,7 @@
           <h1 class="form-header">Sign In</h1>
           <label class="email-or-phone-label">
             <input
+              id="name"
               class="email-or-phone-input"
               type="text"
               name="userName"
@@ -79,6 +82,32 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      userName: "",
+    };
+  },
+  methods: {
+    captureUsername() {
+      // window.addEventListener("load", () => {
+      // Username input / saves to local storage
+      const nameChange = document.querySelector("#name");
+      const username = localStorage.getItem("username") || "";
+      nameChange.value = username;
+
+      // Change event listener which saves user name
+      nameChange.addEventListener("change", (e) => {
+        localStorage.setItem("username", e.target.value);
+        document.querySelector("");
+      });
+      // });
+    },
+  },
+};
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Arimo&family=Open+Sans&display=swap");
@@ -188,6 +217,7 @@ header {
   background: #333;
   margin-bottom: 16px;
   color: #fff;
+  line-height: 1;
 }
 
 .form-sign-in-btn {
