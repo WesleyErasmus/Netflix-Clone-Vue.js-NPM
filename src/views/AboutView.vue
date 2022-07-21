@@ -34,8 +34,14 @@
           </label>
           <!-- Sign-in link to Home Page  -->
           <router-link :to="{ path: '/' }"
-            ><button class="form-sign-in-btn">Sign In</button></router-link
-          >
+            ><button
+              @click="saveUserName()"
+              id="saveUserName"
+              class="form-sign-in-btn"
+            >
+              Sign In
+            </button>
+          </router-link>
 
           <div class="login-help-options">
             <label class="remember-me-checkbox-label">
@@ -105,6 +111,28 @@ export default {
       });
       // });
     },
+    saveUserName() {
+      let new_data = document.getElementById("name").value;
+
+      if (localStorage.getItem("data") == null) {
+        localStorage.setItem("data", "[]");
+      }
+
+      let old_data = JSON.parse(localStorage.getItem("data"));
+      old_data.push(new_data);
+
+      localStorage.setItem("data", JSON.stringify(old_data));
+      document.querySelector(".display-name").innerHTML = JSON.parse(
+        localStorage.getItem("data")
+      );
+    },
+    displayUserName() {
+      if (localStorage.getItem("data") != null) {
+        document.querySelector(".display-name").innerHTML = JSON.parse(
+          localStorage.getItem("data")
+        );
+      }
+    },
   },
 };
 </script>
@@ -148,6 +176,7 @@ ul {
 
 button {
   border: none;
+  line-height: 1;
 }
 
 header {

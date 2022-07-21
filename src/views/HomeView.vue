@@ -2,304 +2,315 @@
   <div class="home">
     <div class="home-page-app-wrapper">
       <!--REMOVED COMMENTED OUT CSS -- Transparent background giving a dark cinema effect -->
-      <div class="cinema-dark-room-effect">
-        <!-- Home Page Navbar -->
+      <!-- <div class="cinema-dark-room-effect"> -->
+      <!-- Home Page Navbar -->
 
-        <!-- Bootstrap Navbar -->
-        <div class="home-page-top-menu">
-          <nav class="navbar top-navbar fixed-top">
-            <div class="container-fluid top-navbar-inner">
-              <div class="app-logo-and-menu-flex-container">
-                <!-- Home page Netflix logo -->
-                <img
-                  id="home-page-back-to-top"
-                  class="home-gage-app-logo"
-                  src="../assets/netflix-logo.png"
-                  alt="Netflix Logo"
-                />
-                <!-- Nav buttons, Home, Watch-list, Coming Soon -->
-                <ul class="top-nav-menu-btns">
-                  <li
-                    id="pagetop"
-                    class="top-nav-btn top-nav-home-btn"
-                    v-show="scY > 300"
-                    @click="toTop"
-                  >
-                    Home
-                  </li>
-                  <router-link :to="{ path: '/comingsoon' }">
-                    <li class="top-nav-btn top-nav-movies-btn">Coming Soon</li>
+      <!-- Bootstrap Navbar -->
+      <div class="home-page-top-menu">
+        <nav class="navbar top-navbar fixed-top">
+          <div class="container-fluid top-navbar-inner">
+            <div class="app-logo-and-menu-flex-container">
+              <!-- Home page Netflix logo -->
+              <img
+                id="home-page-back-to-top"
+                class="home-gage-app-logo"
+                src="../assets/netflix-logo.png"
+                alt="Netflix Logo"
+              />
+              <!-- Nav buttons, Home, Watch-list, Coming Soon -->
+              <ul class="top-nav-menu-btns">
+                <li
+                  id="pagetop"
+                  class="top-nav-btn top-nav-home-btn"
+                  v-show="scY > 300"
+                  @click="toTop"
+                >
+                  Home
+                </li>
+                <router-link :to="{ path: '/comingsoon' }">
+                  <li class="top-nav-btn top-nav-movies-btn">Coming Soon</li>
+                </router-link>
+              </ul>
+            </div>
+            <!-- Nav buttons, Search, User Account -->
+            <div class="top-nav-actions-menu">
+              <div class="top-nav-action-item">
+                <!-- Top nav search bar -->
+                <div class="search-container">
+                  <form action="/search" method="get">
+                    <input
+                      class="search expandright"
+                      id="searchright"
+                      type="search"
+                      name="q"
+                      placeholder="Search"
+                    />
+                    <label class="button searchbutton" for="searchright"
+                      ><span class="mglass">&#9906;</span></label
+                    >
+                  </form>
+                </div>
+              </div>
+              <div class="top-nav-action-item">
+                <!-- Display username -->
+                <div class="top-nav-user-menu display-name"></div>
+                <!-- Sign out dropdown  -->
+              </div>
+              <div class="dropdown">
+                <span class="sign-out-dropdown"></span>
+                <div class="dropdown-content">
+                  <!-- Sign-out link to About Page  -->
+                  <router-link :to="{ path: '/about' }">
+                    <button class="home-page-sign-out-btn">Sign out</button>
                   </router-link>
+                </div>
+              </div>
+            </div>
+
+            <!-- Navbar hamburger button -->
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar"
+              aria-controls="offcanvasNavbar"
+            >
+              <!-- Hamburger icon -->
+              <span><i class="fa-solid fa-user"></i></span>
+              <span class="sign-out-dropdown"></span>
+            </button>
+            <div
+              class="offcanvas offcanvas-end"
+              tabindex="-1"
+              id="offcanvasNavbar"
+              aria-labelledby="offcanvasNavbarLabel"
+            >
+              <!-- Username in Offcanvas header -->
+              <div class="offcanvas-header">
+                <!-- Display username -->
+                <h5
+                  class="offcanvas-title"
+                  id="offcanvasNavbarLabel display-name"
+                ></h5>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white"
+                  data-bs-dismiss="offcanvas"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <!-- Offcanvas body menu-->
+              <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                  <li class="nav-item">
+                    <router-link :to="{ path: '/' }">
+                      <a class="nav-link active" aria-current="page" href="#"
+                        >Home</a
+                      ></router-link
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <router-link :to="{ path: '/watchlist' }">
+                      <a class="nav-link active" aria-current="page" href="#"
+                        >Watch List</a
+                      ></router-link
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <router-link :to="{ path: '/comingsoon' }">
+                      <a class="nav-link active" aria-current="page" href="#"
+                        >Coming Soon</a
+                      ></router-link
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <router-link :to="{ path: '/about' }">
+                      <a class="nav-link active" aria-current="page" href="#"
+                        >Sign Out</a
+                      ></router-link
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"></a>
+                  </li>
                 </ul>
               </div>
-              <!-- Nav buttons, Search, User Account -->
-              <div class="top-nav-actions-menu">
-                <div class="top-nav-action-item">
-                  <!-- Top nav search bar -->
-                  <div class="search-container">
-                    <form action="/search" method="get">
-                      <input
-                        class="search expandright"
-                        id="searchright"
-                        type="search"
-                        name="q"
-                        placeholder="Search"
-                      />
-                      <label class="button searchbutton" for="searchright"
-                        ><span class="mglass">&#9906;</span></label
-                      >
-                    </form>
-                  </div>
-                </div>
-                <div class="top-nav-action-item">
-                  <!-- Display username -->
-                  <div class="top-nav-user-menu display-name"></div>
-                  <!-- Sign out dropdown  -->
-                </div>
-                <div class="dropdown">
-                  <span class="sign-out-dropdown"></span>
-                  <div class="dropdown-content">
-                    <!-- Sign-out link to About Page  -->
-                    <router-link :to="{ path: '/about' }">
-                      <button class="home-page-sign-out-btn">Sign out</button>
-                    </router-link>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Navbar hamburger button -->
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar"
-              >
-                <!-- Hamburger icon -->
-                <span><i class="fa-solid fa-user"></i></span>
-                <span class="sign-out-dropdown"></span>
-              </button>
-              <div
-                class="offcanvas offcanvas-end"
-                tabindex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
-              >
-                <!-- Username in Offcanvas header -->
-                <div class="offcanvas-header">
-                  <!-- Display username -->
-                  <h5
-                    class="offcanvas-title"
-                    id="offcanvasNavbarLabel display-name"
-                  >
-                    Mercedes Erasmus
-                  </h5>
-                  <button
-                    type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <!-- Offcanvas body menu-->
-                <div class="offcanvas-body">
-                  <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                      <router-link :to="{ path: '/' }">
-                        <a class="nav-link active" aria-current="page" href="#"
-                          >Home</a
-                        ></router-link
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <router-link :to="{ path: '/watchlist' }">
-                        <a class="nav-link active" aria-current="page" href="#"
-                          >Watch List</a
-                        ></router-link
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <router-link :to="{ path: '/comingsoon' }">
-                        <a class="nav-link active" aria-current="page" href="#"
-                          >Coming Soon</a
-                        ></router-link
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <router-link :to="{ path: '/about' }">
-                        <a class="nav-link active" aria-current="page" href="#"
-                          >Sign Out</a
-                        ></router-link
-                      >
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
-          </nav>
-        </div>
-        <!-- End of Bootstrap Navbar -->
-
-        <!-- Home page hero image carousel -->
-        <section class="hero-image-trailer-wrapper">
-          <!-- BOOTSTRAP CAROUSEL - fix auto slide -->
-          <div
-            id="carouselExampleCaptions"
-            class="carousel slide"
-            data-bs-ride="false"
-          >
-            <div class="carousel-indicators">
-              <button
-                type="button"
-                data-bs-target="#carouselExampleCaptions"
-                data-bs-slide-to="0"
-                class="active"
-                aria-current="true"
-                aria-label="Slide 1"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselExampleCaptions"
-                data-bs-slide-to="1"
-                aria-label="Slide 2"
-              ></button>
-              <button
-                type="button"
-                data-bs-target="#carouselExampleCaptions"
-                data-bs-slide-to="2"
-                aria-label="Slide 3"
-              ></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img
-                  src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABQCMBLtcppxXsD6dBXpwWTPLWCmvk89ihfn0kKjhxUVPmcUZdgzeDdzrIAW6UGUYDI61C5Ee8ocx8dsDy6IZ3dqNsnGqnCJ9ImDS.webp?r=763"
-                  class="d-block w-100"
-                  alt=""
-                />
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>First slide label</h5>
-                  <p>
-                    Some representative placeholder content for the first slide.
-                  </p>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABRXM8JbVMT0QdVT9zM99-LIKCdYyF68UL6oaeib1PU8CtEHAoreOb_svxhhqlUhifqNUSca0slwMr2wGxUm-xptEKAENYfRXLjWs.webp?r=94a"
-                  class="d-block w-100"
-                  alt=""
-                />
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>Second slide label</h5>
-                  <p>
-                    Some representative placeholder content for the second
-                    slide.
-                  </p>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img
-                  src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABQCMBLtcppxXsD6dBXpwWTPLWCmvk89ihfn0kKjhxUVPmcUZdgzeDdzrIAW6UGUYDI61C5Ee8ocx8dsDy6IZ3dqNsnGqnCJ9ImDS.webp?r=763"
-                  class="d-block w-100"
-                  alt=""
-                />
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>Third slide label</h5>
-                  <p>
-                    Some representative placeholder content for the third slide.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <button
-              class="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-              class="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-            <!-- Coming soon watermark -->
-
-            <span class="coming-soon-watermark"> COMING SOON</span>
           </div>
-          <!-- END OF BOOTSTRAP CAROUSEL -->
+        </nav>
+      </div>
+      <!-- End of Bootstrap Navbar -->
 
-          <!-- Watch-list heading -->
-          <h1 class="my-list-heading">My Watch List</h1>
-        </section>
-        <!-- Container for movies and page footer - used to simplify screen responsiveness -->
-        <div class="movies-and-footer-container">
-          <!-- .watch-list-movie-slider-wrapper -->
-          <section class="watch-list-movie-slider-wrapper">
-            <!-- Watch-list prev button -->
+      <!-- Home page hero image carousel -->
+      <section class="hero-image-trailer-wrapper">
+        <!-- BOOTSTRAP CAROUSEL - fix auto slide -->
+        <div
+          id="carouselExampleCaptions"
+          class="carousel slide"
+          data-bs-ride="false"
+        >
+          <div class="carousel-indicators">
             <button
-              class="watch-list-slider-handles sliderHandles watch-list-handle-prev prevHandle"
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleCaptions"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABQCMBLtcppxXsD6dBXpwWTPLWCmvk89ihfn0kKjhxUVPmcUZdgzeDdzrIAW6UGUYDI61C5Ee8ocx8dsDy6IZ3dqNsnGqnCJ9ImDS.webp?r=763"
+                class="d-block w-100"
+                alt=""
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h5>First slide label</h5>
+                <p>
+                  Some representative placeholder content for the first slide.
+                </p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img
+                src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABRXM8JbVMT0QdVT9zM99-LIKCdYyF68UL6oaeib1PU8CtEHAoreOb_svxhhqlUhifqNUSca0slwMr2wGxUm-xptEKAENYfRXLjWs.webp?r=94a"
+                class="d-block w-100"
+                alt=""
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h5>Second slide label</h5>
+                <p>
+                  Some representative placeholder content for the second slide.
+                </p>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img
+                src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABQCMBLtcppxXsD6dBXpwWTPLWCmvk89ihfn0kKjhxUVPmcUZdgzeDdzrIAW6UGUYDI61C5Ee8ocx8dsDy6IZ3dqNsnGqnCJ9ImDS.webp?r=763"
+                class="d-block w-100"
+                alt=""
+              />
+              <div class="carousel-caption d-none d-md-block">
+                <h5>Third slide label</h5>
+                <p>
+                  Some representative placeholder content for the third slide.
+                </p>
+              </div>
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+          <!-- Coming soon watermark -->
+
+          <span class="coming-soon-watermark"> COMING SOON</span>
+        </div>
+        <!-- END OF BOOTSTRAP CAROUSEL -->
+
+        <!-- Watch-list heading -->
+        <h1 class="my-list-heading">My Watch List</h1>
+      </section>
+      <!-- Container for movies and page footer - used to simplify screen responsiveness -->
+      <div class="movies-and-footer-container">
+        <!-- .watch-list-movie-slider-wrapper -->
+        <section class="watch-list-movie-slider-wrapper">
+          <!-- Watch-list prev button -->
+          <button
+            class="watch-list-slider-handles sliderHandles watch-list-handle-prev prevHandle"
+          >
+            <div class="watch-list-handle-prev-icon">
+              <i class="fa-solid fa-chevron-left"></i>
+            </div>
+          </button>
+          <div class="watch-list-movie-slider-container sliderContainer">
+            <!-- Watch-list movie slider with next and prev button -->
+            <div class="watch-list-movie-slider movieSlider">
+              <!-- WATCH-LIST PLACEHOLDER IMAGES -->
+              <!-- <ul> -->
+              <div v-for="(movie, i) in watchList" :key="i">
+                {{ movie }}
+              </div>
+            </div>
+
+            <!-- Watch-list next button -->
+            <button
+              class="watch-list-slider-handles sliderHandles watch-list-handle-next nextHandle"
             >
-              <div class="watch-list-handle-prev-icon">
-                <i class="fa-solid fa-chevron-left"></i>
+              <div class="watch-list-handle-next-icon">
+                <i class="fa-solid fa-chevron-right"></i>
               </div>
             </button>
-            <div class="watch-list-movie-slider-container sliderContainer">
-              <!-- Watch-list movie slider with next and prev button -->
-              <div class="watch-list-movie-slider movieSlider">
-                <!-- WATCH-LIST PLACEHOLDER IMAGES -->
-                <!-- <ul> -->
-                <div v-for="(movie, i) in watchList" :key="i">
-                  {{ movie }}
-                </div>
-              </div>
+          </div>
+        </section>
+        <!-- Movies container heading -->
+        <h1 class="slider-heading">Watch the Latest Movies and TV Shows</h1>
+        <!-- Movie Slider container -->
+        <section class="movie-slider-container row">
+          <!-- Movie item -->
 
-              <!-- Watch-list next button -->
-              <button
-                class="watch-list-slider-handles sliderHandles watch-list-handle-next nextHandle"
-              >
-                <div class="watch-list-handle-next-icon">
-                  <i class="fa-solid fa-chevron-right"></i>
-                </div>
+          <div
+            class="card"
+            style="width: 18rem"
+            v-for="item in movies"
+            v-bind:key="item.id"
+          >
+            <img :src="item.image" class="card-img-top" alt="Movie Poster" />
+            <div class="card-body">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <p class="card-text">
+                <span>Duration: </span> {{ item.duration }}
+                <span>Release Date: </span> {{ item.release_date }}
+              </p>
+              <button class="btn btn-primary" v-on:click="addToWatchList(item)">
+                <i class="fa-solid fa-plus"></i>
               </button>
             </div>
-          </section>
-          <!-- Movies container heading -->
-          <h1 class="slider-heading">Watch the Latest Movies and TV Shows</h1>
-          <!-- Movie Slider container -->
-          <section class="movie-slider-wrapper">
-            <!-- Movie item -->
-            <span
+          </div>
+          <!-- <span
               class="movie-slider-item"
               v-for="item in movies"
               v-bind:key="item.id"
-            >
-              <img class="slider-img" :src="item.image" alt="Movie Poster" />
+            > -->
 
-              <button
+          <!-- <img class="slider-img" :src="item.image" alt="Movie Poster" /> -->
+
+          <!-- <button
                 class="movie-slider-item-btn"
                 v-on:click="addToWatchList(item)"
               >
                 <i class="fa-solid fa-plus"></i>
-              </button>
+              </button> -->
 
-              <span class="movies-info-container">
+          <!-- <span class="movies-info-container">
                 <div class="name"><span>Title: </span> {{ item.name }}</div>
                 <div class="duration">
                   <span>Duration: </span> {{ item.duration }}
@@ -308,30 +319,30 @@
                   <span>Release Date: </span> {{ item.release_date }}
                 </div>
               </span>
-            </span>
-          </section>
-          <!-- Home page footer -->
-          <footer class="home-page-footer">
-            <!-- Home page footer links -->
-            <ul class="footer-links">
-              <li class="footer-link-item">Audio and Subtitles</li>
-              <li class="footer-link-item">Audio Description</li>
-              <li class="footer-link-item">Help Centre</li>
-              <li class="footer-link-item">Gift Cards</li>
-              <li class="footer-link-item">Media Center</li>
-              <li class="footer-link-item">Investor Relations</li>
-              <li class="footer-link-item">Jobs</li>
-              <li class="footer-link-item">Terms of Use</li>
-              <li class="footer-link-item">Privacy</li>
-              <li class="footer-link-item">Legal Notices</li>
-              <li class="footer-link-item">Cookie Preferences</li>
-              <li class="footer-link-item">Corporate Information</li>
-              <li class="footer-link-item">Contact Us</li>
-            </ul>
-          </footer>
-        </div>
-        <!-- End of Movies and Footer container -->
+            </span> -->
+        </section>
+        <!-- Home page footer -->
+        <footer class="home-page-footer">
+          <!-- Home page footer links -->
+          <ul class="footer-links">
+            <li class="footer-link-item">Audio and Subtitles</li>
+            <li class="footer-link-item">Audio Description</li>
+            <li class="footer-link-item">Help Centre</li>
+            <li class="footer-link-item">Gift Cards</li>
+            <li class="footer-link-item">Media Center</li>
+            <li class="footer-link-item">Investor Relations</li>
+            <li class="footer-link-item">Jobs</li>
+            <li class="footer-link-item">Terms of Use</li>
+            <li class="footer-link-item">Privacy</li>
+            <li class="footer-link-item">Legal Notices</li>
+            <li class="footer-link-item">Cookie Preferences</li>
+            <li class="footer-link-item">Corporate Information</li>
+            <li class="footer-link-item">Contact Us</li>
+          </ul>
+        </footer>
       </div>
+      <!-- End of Movies and Footer container -->
+      <!-- </div> -->
       <!-- End of Cinema dark room effect container -->
     </div>
     <!-- End of home-page-app-wrapper -->
@@ -974,11 +985,6 @@ export default {
 </script>
 
 <style lang="scss">
-// Test style for Poof - method testing
-.vanish {
-  visibility: hidden;
-}
-
 // Google font import
 @import url("https://fonts.googleapis.com/css2?family=Arimo&family=Open+Sans&display=swap");
 
@@ -1277,6 +1283,7 @@ body {
 // Top navbar hamburger button [hidden]
 .navbar-toggler {
   display: none;
+  border: none;
 }
 
 // Top navbar hamburger icon
@@ -1471,8 +1478,7 @@ Watch list movie item .watch-list-slider-item {
   border-bottom-right-radius: 0;
 }
 
-/* Used Netflix background styling to blend watch-list slider with hero image [Adds Shadow Effect] */
-.movie-slider-wrapper {
+.movie-slider-container {
   background-color: transparent;
   background-image: linear-gradient(
     180deg,
@@ -1488,29 +1494,38 @@ Watch list movie item .watch-list-slider-item {
   background-size: 100% 100%;
   bottom: -1px;
   opacity: 1;
-  position: relative;
-  margin: 0 auto;
-  margin-bottom: 4%;
-  flex-grow: 1;
-  /* --items-per-screen used with flex and max-width determine how many items display on the screen */
-  --items-per-screen: 6;
-  --slider-index: 0;
-  transform: translateX(calc(var(--slider-index) * -100%));
-  transition: transform 250ms ease-in-out;
-  z-index: 3;
-  padding: 0 4%;
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  position: relative;
+  margin-bottom: 4%;
+  z-index: 3;
 }
 
-// Movie images styling
-.slider-img {
+.card {
+  background: hsla(0, 1%, 22%, 0.5);
+  border-radius: 0.25rem;
+  padding: 0 0.1vw;
+  margin: 0.25vw 0.25vw;
+}
+
+.card-img-top {
   aspect-ratio: 16 / 9;
   padding: 0 0.1vw;
   margin: 0.5vw 0;
-  cursor: pointer;
-  max-width: calc(100% / var(--items-per-screen));
-  width: 16.6666667%;
-  transition: 0.5s ease-out 0s;
+  // cursor: pointer;
+}
+
+.card-body {
+}
+
+.card-title {
+  color: #e5e5e5;
+}
+
+.card-text {
+  font-size: calc(8px + 0.5vw);
 }
 
 .movie-slider-item-btn {
@@ -1522,27 +1537,6 @@ Watch list movie item .watch-list-slider-item {
 
 .fa-plus {
   color: #fff;
-}
-
-// .slider-img:hover + .movie-slider-item-btn {
-//   display: block;
-// }
-
-.slider-img:hover {
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
-  transition: 0.5s ease-out 0.7s;
-}
-
-// MOVIES LIST - TEMP STYLING [hidden]
-.name,
-.duration,
-.date {
-  display: none;
-  z-index: 25;
-  padding: 10px;
-  background-color: #496583;
 }
 
 // Watch list heading
