@@ -11,6 +11,18 @@
   </main>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      scTimer: 0,
+      scY: 0,
+      watchList: [],
+    };
+  },
+};
+</script>
+
 <style lang="scss">
 // #app {
 //   font-family: Avenir, Helvetica, Arial, sans-serif;

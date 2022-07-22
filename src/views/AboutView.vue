@@ -16,6 +16,7 @@
           <h1 class="form-header">Sign In</h1>
           <label class="email-or-phone-label">
             <input
+              v-model="userName"
               id="name"
               class="email-or-phone-input"
               type="text"
@@ -35,13 +36,14 @@
           <!-- Sign-in link to Home Page  -->
           <router-link :to="{ path: '/' }"
             ><button
-              @click="saveUserName()"
+              @click="saveUserName(), signInValidation()"
               id="saveUserName"
               class="form-sign-in-btn"
             >
               Sign In
             </button>
           </router-link>
+          <div style="color: #fff; margin: 20px">{{ userName }}</div>
 
           <div class="login-help-options">
             <label class="remember-me-checkbox-label">
@@ -97,20 +99,51 @@ export default {
     };
   },
   methods: {
-    captureUsername() {
-      // window.addEventListener("load", () => {
-      // Username input / saves to local storage
-      const nameChange = document.querySelector("#name");
-      const username = localStorage.getItem("username") || "";
-      nameChange.value = username;
+    signInValidation() {
+      // get reference to submit button of form
+      let submitBtn = document.getElementById("submit");
 
-      // Change event listener which saves user name
-      nameChange.addEventListener("change", (e) => {
-        localStorage.setItem("username", e.target.value);
-        document.querySelector("");
-      });
-      // });
+      submitBtn.onclick = function (e) {
+        // prevent default of behavior of form that refreshes the page
+        e.preventDefault();
+
+        // variable to track whether form data is validated
+        // let validated = true;
+
+        // input field variables
+        let userName = document.getElementById("name");
+        let password = document.getElementById("password");
+
+        // p tags to display errors
+        let nameErr = document.getElementById("task-require");
+        let passwordErr = document.getElementById("date-require");
+
+        // --- Username field validation ---
+        if (userName.value == "") {
+          nameErr.style.visibility = "visible";
+          nameErr.style.color = "red";
+          return false;
+
+          // validated = false
+        } else {
+          nameErr.style.visibility = "hidden";
+        }
+
+        // --- Password field validation ---
+        if (password.value === "") {
+          passwordErr.style.visibility = "visible";
+          passwordErr.style.color = "red";
+          return false;
+          // validated = false
+        } else {
+          passwordErr.style.visibility = "hidden";
+        }
+
+        // --- If all 3 validations pass this will run ---
+        //     if (validated === true) {
+      };
     },
+
     saveUserName() {
       let new_data = document.getElementById("name").value;
 
@@ -122,18 +155,17 @@ export default {
       old_data.push(new_data);
 
       localStorage.setItem("data", JSON.stringify(old_data));
-      document.querySelector(".display-name").innerHTML = JSON.parse(
-        localStorage.getItem("data")
-      );
+      JSON.parse(localStorage.getItem("data"));
     },
-    displayUserName() {
-      if (localStorage.getItem("data") != null) {
-        document.querySelector(".display-name").innerHTML = JSON.parse(
-          localStorage.getItem("data")
-        );
+    displayUserName(name) {
+      let savedName = localStorage.getItem("data", name) || [];
+
+      if (localStorage.getItem("data", name) != null) {
+        this.userName.push(localStorage.getItem("data", savedName));
       }
     },
   },
+  mounted() {},
 };
 </script>
 

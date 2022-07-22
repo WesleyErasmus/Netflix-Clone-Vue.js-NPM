@@ -149,28 +149,6 @@
           class="carousel slide"
           data-bs-ride="false"
         >
-          <div class="carousel-indicators">
-            <button
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="0"
-              class="active"
-              aria-current="true"
-              aria-label="Slide 1"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="1"
-              aria-label="Slide 2"
-            ></button>
-            <button
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide-to="2"
-              aria-label="Slide 3"
-            ></button>
-          </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
               <img
@@ -256,8 +234,31 @@
             <div class="watch-list-movie-slider movieSlider">
               <!-- WATCH-LIST PLACEHOLDER IMAGES -->
               <!-- <ul> -->
-              <div v-for="(movie, i) in watchList" :key="i">
-                {{ movie }}
+              <div
+                class="watch-list-slider-item"
+                v-for="(movie, i) in watchList"
+                :key="i"
+              >
+                <!-- {{ movie }} -->
+                <img
+                  :src="movie.image"
+                  class="card-img-top"
+                  alt="Movie Poster"
+                />
+                <div class="card-body">
+                  <button
+                    class="watch-list-add-btn"
+                    v-on:click="removeFromWatchList()"
+                  >
+                    <i class="fa-solid fa-ban"></i>
+                  </button>
+                  <div class="card-title watch-list-card-title">
+                    {{ movie.name }}
+                  </div>
+                  <div class="card-text">
+                    <div>{{ movie.duration }} min</div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -279,46 +280,24 @@
 
           <div class="card" v-for="item in movies" v-bind:key="item.id">
             <img :src="item.image" class="card-img-top" alt="Movie Poster" />
-            <div class="image-fade"></div>
+
             <div class="card-body">
               <button
                 class="watch-list-add-btn"
-                v-on:click="addToWatchList(item)"
+                v-on:click="addToWatchList(item), maxLength(movie)"
               >
                 <i class="fa-solid fa-plus"></i>
               </button>
-              <h5 class="card-title">{{ item.name }}</h5>
-              <p class="card-text">
-                <span>Duration: </span> {{ item.duration }}
-                <span>Release Date: </span> {{ item.release_date }}
-              </p>
+              <div class="card-title">{{ item.name }}</div>
+              <div class="rating">Rating: {{ item.rating }} / 10</div>
+              <div class="card-text">
+                <div>{{ item.duration }} min</div>
+
+                <div>{{ item.release_date }}</div>
+              </div>
+              <div class="card-description">{{ item.description }}</div>
             </div>
           </div>
-          <!-- <span
-              class="movie-slider-item"
-              v-for="item in movies"
-              v-bind:key="item.id"
-            > -->
-
-          <!-- <img class="slider-img" :src="item.image" alt="Movie Poster" /> -->
-
-          <!-- <button
-                class="movie-slider-item-btn"
-                v-on:click="addToWatchList(item)"
-              >
-                <i class="fa-solid fa-plus"></i>
-              </button> -->
-
-          <!-- <span class="movies-info-container">
-                <div class="name"><span>Title: </span> {{ item.name }}</div>
-                <div class="duration">
-                  <span>Duration: </span> {{ item.duration }}
-                </div>
-                <div class="date">
-                  <span>Release Date: </span> {{ item.release_date }}
-                </div>
-              </span>
-            </span> -->
         </section>
         <!-- Home page footer -->
         <footer class="home-page-footer">
@@ -346,610 +325,84 @@
     </div>
     <!-- End of home-page-app-wrapper -->
   </div>
+  <!-- <About /> -->
 </template>
 
 <script>
 // CodeSpace API import
-// import axios from "axios";
+import axios from "axios";
+// import About from "./AboutView.vue";
 export default {
+  components: {
+    // About,
+  },
   data() {
     return {
       scTimer: 0,
       scY: 0,
       watchList: [],
-      movies: [
-        {
-          id: 1,
-          name: "Prof. Ena Kulas Jr.",
-          duration: "176",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Consectetur fuga corporis distinctio ea necessitatibus. Hic dolores et voluptatem itaque. Et inventore est quas qui molestias sed ut.",
-          release_date: "2013-09-01",
-          is_coming_soon: 0,
-          rating: 1,
-        },
-        {
-          id: 2,
-          name: "Maximo Powlowski V",
-          duration: "180",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Corrupti magni velit earum quod in assumenda nostrum ipsum. Eligendi non veniam modi cupiditate aut. Praesentium repudiandae ipsam id porro dolorem facere. Quo laboriosam sit temporibus sit ducimus.",
-          release_date: "2023-02-04",
-          is_coming_soon: 1,
-          rating: 4,
-        },
-        {
-          id: 3,
-          name: "Madelyn Schinner",
-          duration: "157",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Error aperiam voluptatem sit. Ducimus optio itaque sint iure hic. Autem quas eaque ut laborum rem laborum numquam ut.",
-          release_date: "2019-06-01",
-          is_coming_soon: 0,
-          rating: 10,
-        },
-        {
-          id: 4,
-          name: "Easton Sauer",
-          duration: "173",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Aliquid officia omnis consequatur rerum eum aut deserunt. Vel dolorem laudantium dolor dolor. Rerum id et esse omnis inventore. Quasi assumenda minima est illum ex id deleniti.",
-          release_date: "2019-10-17",
-          is_coming_soon: 0,
-          rating: 5,
-        },
-        {
-          id: 5,
-          name: "Durward Green",
-          duration: "203",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Nobis dolores quae distinctio recusandae. Ipsum illo sunt alias occaecati et optio aperiam aut. Maxime voluptatem aspernatur voluptatem. Nihil eveniet possimus est qui quia. Praesentium at quas aperiam aliquid natus aut in.",
-          release_date: "2022-01-30",
-          is_coming_soon: 1,
-          rating: 4,
-        },
-        {
-          id: 6,
-          name: "Mrs. Annalise Kuhic V",
-          duration: "193",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Dolore consectetur sunt laboriosam odit libero. Qui qui quia dolor deserunt cum omnis vitae. Rem corrupti qui excepturi facilis. Vel blanditiis molestiae minima non magnam aut corrupti.",
-          release_date: "2016-02-26",
-          is_coming_soon: 0,
-          rating: 8,
-        },
-        {
-          id: 7,
-          name: "Stefan Lebsack",
-          duration: "184",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Doloribus vero consequuntur ab et rem omnis. Quae quasi dolorem architecto. Voluptas labore architecto aut officiis.",
-          release_date: "2015-01-14",
-          is_coming_soon: 0,
-          rating: 6,
-        },
-        {
-          id: 8,
-          name: "Sunny Weimann MD",
-          duration: "183",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Dolor quas cumque minus amet. Culpa nam molestias qui ex enim velit. Delectus sequi numquam excepturi possimus. Animi similique eveniet quis nulla quia nemo velit. Aliquid odit ipsam consequatur qui.",
-          release_date: "2022-03-10",
-          is_coming_soon: 1,
-          rating: 2,
-        },
-        {
-          id: 9,
-          name: "Katelyn Kozey",
-          duration: "185",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Qui aspernatur maiores fugiat et aliquam labore maxime. Quis quod consequatur alias laboriosam. Adipisci culpa quo ut voluptatum perferendis qui.",
-          release_date: "2019-01-13",
-          is_coming_soon: 0,
-          rating: 5,
-        },
-        {
-          id: 10,
-          name: "Corene Durgan",
-          duration: "185",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Earum ipsa velit fugiat saepe nisi ut. Cupiditate id architecto unde et. Temporibus aliquid hic ut odio.",
-          release_date: "2016-05-21",
-          is_coming_soon: 0,
-          rating: 4,
-        },
-        {
-          id: 11,
-          name: "Noble Lebsack I",
-          duration: "143",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Itaque harum et ratione minima ratione veniam. Consequatur blanditiis nihil quia. Iure autem nihil aspernatur quia ad. Provident dolorum officia enim inventore harum.",
-          release_date: "2017-11-27",
-          is_coming_soon: 0,
-          rating: 2,
-        },
-        {
-          id: 12,
-          name: "Simone Mohr",
-          duration: "142",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Ut et amet harum saepe. Sunt veritatis consequatur culpa impedit earum officiis. Laborum harum dolores nulla.",
-          release_date: "2022-11-20",
-          is_coming_soon: 1,
-          rating: 4,
-        },
-        {
-          id: 13,
-          name: "Braden Lemke",
-          duration: "196",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Quis molestiae quia est id. Totam perspiciatis quo ut ut. Excepturi et sed dolor aspernatur amet cupiditate. Eum blanditiis nihil nobis esse molestiae magnam quas. Impedit perspiciatis distinctio autem voluptas aut.",
-          release_date: "2017-06-12",
-          is_coming_soon: 0,
-          rating: 3,
-        },
-        {
-          id: 14,
-          name: "Leonard Price",
-          duration: "154",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Et et vero numquam ducimus iusto. Id voluptatum recusandae ut odio esse ea accusamus. Dolor odit in saepe laudantium incidunt.",
-          release_date: "2013-08-19",
-          is_coming_soon: 0,
-          rating: 1,
-        },
-        {
-          id: 15,
-          name: "Erick Rogahn",
-          duration: "192",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Nisi accusantium nostrum rem nisi ad omnis iusto. Repellendus quisquam exercitationem non et ducimus voluptatem. Odit voluptas dolorum sit inventore doloremque rerum aut et.",
-          release_date: "2023-02-19",
-          is_coming_soon: 1,
-          rating: 8,
-        },
-        {
-          id: 16,
-          name: "Melyna Ritchie",
-          duration: "169",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Qui esse labore qui rerum. Sed atque explicabo veritatis voluptas. Sunt quae reprehenderit quis et.",
-          release_date: "2016-01-11",
-          is_coming_soon: 0,
-          rating: 9,
-        },
-        {
-          id: 17,
-          name: "Rupert Vandervort",
-          duration: "211",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Sequi consequatur non eaque nesciunt ut nihil. Laudantium doloribus vel sit et maxime labore. Nesciunt et neque qui eum. Dolores ut a nobis molestiae ipsum ducimus.",
-          release_date: "2015-01-03",
-          is_coming_soon: 0,
-          rating: 3,
-        },
-        {
-          id: 18,
-          name: "Max Lind II",
-          duration: "164",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Qui consequatur sint voluptatem sit quia fuga quaerat. Itaque dolores odio et porro laudantium sunt beatae. Delectus aut aut exercitationem maiores. Tenetur dolores temporibus rem. Sit id ut non quos blanditiis.",
-          release_date: "2016-03-09",
-          is_coming_soon: 0,
-          rating: 4,
-        },
-        {
-          id: 19,
-          name: "Kailyn Nolan",
-          duration: "186",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Dolor eligendi quos ut et cum ut. Sit temporibus voluptates consectetur asperiores voluptas. Cumque natus sed odit. Molestiae dolorum atque commodi.",
-          release_date: "2022-03-27",
-          is_coming_soon: 1,
-          rating: 4,
-        },
-        {
-          id: 20,
-          name: "Dr. Annette Mosciski Sr.",
-          duration: "143",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Quod culpa blanditiis cumque quia et in ut voluptatem. Perspiciatis esse assumenda officia quo quia. Qui qui dolor ut iste.",
-          release_date: "2023-01-04",
-          is_coming_soon: 1,
-          rating: 6,
-        },
-        {
-          id: 21,
-          name: "Wilmer Feest",
-          duration: "210",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Rem amet a quidem quia. Excepturi veniam iure aut libero aperiam dolorum placeat. Dolor facere impedit maiores.",
-          release_date: "2023-02-07",
-          is_coming_soon: 1,
-          rating: 9,
-        },
-        {
-          id: 22,
-          name: "Rosalyn Walker",
-          duration: "192",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Aut fuga qui sint possimus sit. Dolor fugiat maiores beatae qui ab aut sed.",
-          release_date: "2019-01-14",
-          is_coming_soon: 0,
-          rating: 4,
-        },
-        {
-          id: 23,
-          name: "Selina Ortiz II",
-          duration: "157",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Et ullam sit et error. Placeat iure ullam fuga blanditiis a quis. Vero iste mollitia corrupti. Numquam nostrum atque fugit eveniet quasi cupiditate voluptatibus ut.",
-          release_date: "2020-12-04",
-          is_coming_soon: 0,
-          rating: 4,
-        },
-        {
-          id: 24,
-          name: "Prof. Nash Conroy",
-          duration: "192",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Laudantium assumenda blanditiis animi et sed voluptas. Magnam atque aut quo molestias nobis eos itaque sapiente. Et ut similique eos quia sed provident.",
-          release_date: "2022-04-14",
-          is_coming_soon: 1,
-          rating: 2,
-        },
-        {
-          id: 25,
-          name: "Miss Claire Prosacco",
-          duration: "175",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Iusto aut itaque rerum incidunt similique. Molestiae quibusdam facilis in vero. Veniam fugiat voluptas eaque sit nesciunt at. Sunt consequatur rerum mollitia.",
-          release_date: "2017-11-27",
-          is_coming_soon: 0,
-          rating: 9,
-        },
-        {
-          id: 26,
-          name: "Layla Tromp III",
-          duration: "173",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Omnis quam soluta dolores. Eum ut autem nihil qui autem sint. Quo vitae voluptatem cum. Tempora sint at voluptatum aut sapiente dicta nostrum.",
-          release_date: "2022-12-06",
-          is_coming_soon: 1,
-          rating: 8,
-        },
-        {
-          id: 27,
-          name: "Demarcus Wiegand",
-          duration: "192",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Nemo laudantium architecto eveniet deserunt dolores voluptatibus. Quo unde sed molestiae nesciunt nam a. Et dolorem quas non sint fugiat adipisci. Assumenda perferendis omnis nobis sit distinctio ea excepturi.",
-          release_date: "2014-11-01",
-          is_coming_soon: 0,
-          rating: 8,
-        },
-        {
-          id: 28,
-          name: "Stevie Hamill",
-          duration: "208",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Perferendis dolor tenetur eligendi et. Aut praesentium illo accusamus ut asperiores maxime. Sit et ut nihil dolor. Exercitationem beatae incidunt suscipit. Voluptatibus ut est consequatur qui eos iure eveniet doloribus.",
-          release_date: "2013-08-19",
-          is_coming_soon: 0,
-          rating: 1,
-        },
-        {
-          id: 29,
-          name: "Prof. Misael Stiedemann",
-          duration: "209",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Animi ab magni quia id. Tempora eum quod amet nulla. Qui omnis maxime consectetur tempore.",
-          release_date: "2023-02-14",
-          is_coming_soon: 1,
-          rating: 3,
-        },
-        {
-          id: 30,
-          name: "Darrel Prohaska",
-          duration: "145",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Laudantium ut nisi fugit explicabo aperiam repellendus. Vel neque aut corporis. Nihil sed tempore numquam eius nobis repellat.",
-          release_date: "2022-12-04",
-          is_coming_soon: 1,
-          rating: 1,
-        },
-        {
-          id: 31,
-          name: "Zachariah Wisoky",
-          duration: "191",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Adipisci dolorem adipisci quos illum doloribus praesentium. Odio vel nemo quis corrupti rerum. Vitae nisi provident repudiandae eaque enim et nostrum et.",
-          release_date: "2022-05-04",
-          is_coming_soon: 1,
-          rating: 7,
-        },
-        {
-          id: 32,
-          name: "Chasity Zboncak",
-          duration: "214",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Quod nobis non minus molestiae maiores. Saepe autem rerum molestiae dolorum labore ex. Magnam ab mollitia nobis. A officia maxime similique nulla officiis voluptatem suscipit incidunt.",
-          release_date: "2017-12-18",
-          is_coming_soon: 0,
-          rating: 10,
-        },
-        {
-          id: 33,
-          name: "Mrs. Eulah Sipes Jr.",
-          duration: "187",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Ipsum harum fugiat et. Vitae amet alias earum sit incidunt ad ut. Quisquam voluptas quae porro dolore.",
-          release_date: "2022-07-30",
-          is_coming_soon: 1,
-          rating: 8,
-        },
-        {
-          id: 34,
-          name: "Providenci Koepp",
-          duration: "147",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Non eos ipsam expedita ducimus. Sit et autem eius reprehenderit. Voluptas placeat cupiditate assumenda doloremque. Laborum ut id at.",
-          release_date: "2022-12-20",
-          is_coming_soon: 1,
-          rating: 6,
-        },
-        {
-          id: 35,
-          name: "Melvina Dickens",
-          duration: "219",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Incidunt ut unde porro facilis ut aut aliquam. Tenetur omnis amet necessitatibus praesentium. Numquam tenetur eos error corporis nobis adipisci.",
-          release_date: "2022-12-27",
-          is_coming_soon: 1,
-          rating: 5,
-        },
-        {
-          id: 36,
-          name: "Chester Olson",
-          duration: "166",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Ut est reiciendis aspernatur eos qui ea. Quia voluptatem quibusdam reprehenderit nesciunt quia similique architecto optio.",
-          release_date: "2022-05-29",
-          is_coming_soon: 1,
-          rating: 7,
-        },
-        {
-          id: 37,
-          name: "Jacinto Effertz II",
-          duration: "197",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Beatae eaque ratione commodi. Rerum itaque velit provident explicabo eum aut ut distinctio. Quasi illo nemo beatae sed et sed voluptates. Quaerat aliquam fugit enim cumque aut aspernatur minima.",
-          release_date: "2013-12-16",
-          is_coming_soon: 0,
-          rating: 3,
-        },
-        {
-          id: 38,
-          name: "Virginia Effertz",
-          duration: "174",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Rerum tempore asperiores quos illum quo quidem quia corporis. Repellendus quidem et totam beatae totam enim nulla. Ut illo fugit animi debitis blanditiis perferendis. Eius eaque et voluptate qui tenetur. Rerum eos maxime qui delectus esse.",
-          release_date: "2022-12-29",
-          is_coming_soon: 1,
-          rating: 10,
-        },
-        {
-          id: 39,
-          name: "Dr. Marcelino DuBuque",
-          duration: "209",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Itaque deleniti deserunt aliquid. Aspernatur possimus nobis error totam sit. Officiis distinctio incidunt amet quisquam non beatae nulla. Ut eos quibusdam molestiae reiciendis saepe optio qui sequi.",
-          release_date: "2022-10-05",
-          is_coming_soon: 1,
-          rating: 3,
-        },
-        {
-          id: 40,
-          name: "Mr. Jayce Osinski DDS",
-          duration: "187",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Exercitationem doloremque officiis quia consequatur consequuntur nam officia aut. Voluptatem dicta temporibus ipsum praesentium sint vel doloremque dolores. Modi aut quam aut. Iusto at soluta facilis autem itaque et.",
-          release_date: "2018-10-14",
-          is_coming_soon: 0,
-          rating: 4,
-        },
-        {
-          id: 41,
-          name: "Winnifred Bartoletti",
-          duration: "183",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Aliquid assumenda cupiditate eos ipsam. Officiis omnis necessitatibus eos et quam ut. Error unde dolor sunt id autem dolore nisi.",
-          release_date: "2019-03-21",
-          is_coming_soon: 0,
-          rating: 7,
-        },
-        {
-          id: 42,
-          name: "Helga Becker",
-          duration: "207",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Amet voluptatibus placeat fugiat voluptates fugit. Voluptas dolor suscipit ipsa eos in non. Inventore recusandae quas ab asperiores et. Quos nobis velit dolorum dolor a.",
-          release_date: "2017-07-28",
-          is_coming_soon: 0,
-          rating: 3,
-        },
-        {
-          id: 43,
-          name: "Prof. Lelia Weimann",
-          duration: "200",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Ea et possimus ut est impedit. Explicabo modi dolorum recusandae reiciendis nobis. Nesciunt dolore enim consequatur.",
-          release_date: "2022-05-05",
-          is_coming_soon: 1,
-          rating: 8,
-        },
-        {
-          id: 44,
-          name: "Prof. Jermaine Smith",
-          duration: "205",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Reprehenderit tempora id excepturi rerum et eligendi. Nihil veritatis qui minima esse qui rerum esse. Mollitia optio et molestias tempora animi.",
-          release_date: "2016-04-22",
-          is_coming_soon: 0,
-          rating: 9,
-        },
-        {
-          id: 45,
-          name: "Holly Spinka",
-          duration: "208",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Excepturi et harum commodi tenetur aliquam sint est. Sit eligendi excepturi velit autem a dolore.",
-          release_date: "2022-04-02",
-          is_coming_soon: 1,
-          rating: 10,
-        },
-        {
-          id: 46,
-          name: "Oscar Hauck",
-          duration: "204",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Veritatis dolore est sunt consequatur reprehenderit. Minima quod et aliquam voluptatibus ea maxime quisquam.",
-          release_date: "2022-05-13",
-          is_coming_soon: 1,
-          rating: 10,
-        },
-        {
-          id: 47,
-          name: "Malachi Langosh DVM",
-          duration: "170",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Est magni magnam qui a quia ea. Et molestiae qui qui rem nobis dolorum. Assumenda omnis rerum eligendi atque inventore exercitationem. Sint inventore explicabo culpa asperiores.",
-          release_date: "2020-10-27",
-          is_coming_soon: 0,
-          rating: 1,
-        },
-        {
-          id: 48,
-          name: "Candace Kovacek",
-          duration: "188",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Facere amet ipsam dolorum facere aut. Aperiam labore ut pariatur sequi minus repellat cumque. Magni libero fuga esse reiciendis corporis accusantium. Nisi consequatur qui ea dolorem. Maxime qui consequatur consectetur similique ipsum et.",
-          release_date: "2022-09-14",
-          is_coming_soon: 1,
-          rating: 2,
-        },
-        {
-          id: 49,
-          name: "Orville Miller",
-          duration: "189",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Atque sit aut vitae aut quia ut ad. Fuga veritatis est beatae qui sapiente. Consequatur impedit molestiae harum ea iusto. Quia assumenda eum qui.",
-          release_date: "2022-09-29",
-          is_coming_soon: 1,
-          rating: 9,
-        },
-        {
-          id: 50,
-          name: "Marjorie Murphy III",
-          duration: "145",
-          image: "https://picsum.photos/200/300",
-          description:
-            "Omnis dicta suscipit deleniti sit eligendi. Necessitatibus tenetur atque quis quas voluptas. Atque ut quia quidem aut ut.",
-          release_date: "2016-12-09",
-          is_coming_soon: 0,
-          rating: 8,
-        },
-      ],
     };
   },
 
   methods: {
-    // THIS IS ELVIS' EXAMPLE FROM COACHING SESSION
-    // Adding movies to localStorage and then to watchlist
-    addToWatchList(id) {
-      console.log(id);
-      let watchListMovie = null;
-      this.movies.forEach((element) => {
-        if (element.id == id) {
-          watchListMovie = element;
-        }
-      });
-
-      this.watchList.unshift(id);
-
-      console.log(watchListMovie);
-      console.log(localStorage.getItem("watchMovie"));
-      if (!localStorage.getItem("watchMovie")) {
-        let watchListMoviesArray = [];
-        watchListMoviesArray.push(watchListMovie);
-        localStorage.setItem("watchMovie", watchListMoviesArray);
+    watchListExists() {
+      if (localStorage.getItem("watch-key")) {
+        return true;
       } else {
-        let localStorageArr = localStorage.getItem("watchMovie");
-        localStorageArr.push(watchListMovie);
-        localStorage.setItem("watchMovie", localStorageArr);
+        return false;
       }
     },
 
     // method takes in an argument of a movie object
+    addToWatchList(movie) {
+      if (this.watchListExists()) {
+        let jsonWatchList = localStorage.getItem("watch-key");
+        this.watchList = JSON.parse(jsonWatchList);
 
-    // addToWatchList(movie) {
-    //   let watchList = null;
-    //   watchList = localStorage.getItem("watchListInLocalStorage");
+        // push new array on to watchList array
+        this.watchList.push(movie);
 
-    //   localStorage.setItem("watchListInLocalStorage", watchList);
-    //   console.log(watchList);
+        console.log(this.watchList);
 
-    //   watchList.unshift(movie);
+        // convert all data inside watchList variable to JSON
+        jsonWatchList = JSON.stringify(this.watchList);
+
+        localStorage.setItem("watch-key", jsonWatchList);
+      } else {
+        this.watchList.push(movie);
+
+        console.log(this.watchList);
+
+        // convert all data inside watchList variable to JSON
+        let jsonWatchList = JSON.stringify(this.watchList);
+
+        localStorage.setItem("watch-key", jsonWatchList);
+      }
+
+      // if (this.watchList.length > 20) {
+      //   this.watchList.unshift(movie);
+      // }
+    },
+
+    // maxLength(movie) {
+    //   if (this.watchList.length > 20) {
+    //     this.watchList.unshift(movie);
+    //   }
     // },
+
+    removeFromWatchList(movie) {
+      // this.watchList.splice(this.movie);
+
+      //   // Removes from end
+      //   // this.watchList.splice(this.watchList.indexOf(movie), 1);
+
+      //   // Removes from start
+      this.watchList.splice(movie, 1);
+
+      console.log(this.watchList);
+
+      localStorage.setItem("watch-key", JSON.stringify(this.watchList));
+    },
 
     // Scroll to top Home button
     handleScroll: function () {
@@ -969,13 +422,17 @@ export default {
   },
 
   mounted() {
+    if (this.watchListExists()) {
+      let jsonWatchList = localStorage.getItem("watch-key");
+      this.watchList = JSON.parse(jsonWatchList);
+    }
     // CodeSpace API import using axios
-    // axios
-    //   .get("https://project-apis.codespace.co.za/api/movies")
-    //   .then((response) => {
-    //     this.movies = response.data.data;
-    //     console.warn(response);
-    //   });
+    axios
+      .get("https://project-apis.codespace.co.za/api/movies")
+      .then((response) => {
+        this.movies = response.data.data;
+        console.warn(response);
+      });
 
     // Scroll to top Home button
     window.addEventListener("scroll", this.handleScroll);
@@ -1425,14 +882,16 @@ div.offcanvas-body {
   --items-per-screen: 6;
   --slider-index: 0;
   transform: translateX(calc(var(--slider-index) * -100%));
-  transition: transform 250ms ease-in-out;
+  transition: transform 450ms ease-in-out;
 }
 
 // Watch list movie item
 .watch-list-slider-item {
+  background: rgba(0, 0, 0, 0.75);
   aspect-ratio: 16 / 9;
   padding: 0 0.1vw;
   display: flex;
+  flex-direction: column;
   border-radius: 0.25rem;
   cursor: pointer;
   flex: 0 0 calc(100% / var(--items-per-screen));
@@ -1494,50 +953,32 @@ div.offcanvas-body {
   background-size: 100% 100%;
   bottom: -1px;
   opacity: 1;
-  width: 100vw;
   display: flex;
-  justify-content: center;
-  flex-grow: 1;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
   position: relative;
+  margin: 0 3.5%;
   margin-bottom: 4%;
   z-index: 3;
 }
 
 .card {
-  background: hsla(0, 1%, 22%, 0.5);
-  border-radius: 0.25rem;
+  background: hsla(0, 0%, 0%, 0.5);
+  border-radius: 0.15rem;
   padding: 0 0.1vw;
   margin: 0.25vw 0.25vw;
   width: 16.6666667%;
+  margin: 0 -0.25vw;
+  margin-bottom: 2%;
+  transition: all 0.3s ease-out 0.1s;
 }
 
 .card-img-top {
   aspect-ratio: 16 / 9;
   padding: 0 0.1vw;
-  margin: 0.5vw 0;
-  // cursor: pointer;
-}
-
-.image-fade {
-  background-color: transparent;
-  background-image: linear-gradient(
-    180deg,
-    hsla(0, 0%, 8%, 0) 0,
-    hsla(0, 0%, 8%, 0.15) 15%,
-    hsla(0, 0%, 8%, 0.35) 29%,
-    hsla(0, 0%, 8%, 0.442) 44%,
-    #1414146b 68%,
-    #14141411
-  );
-  background-position: 0 top;
-  background-repeat: repeat-x;
-  background-size: 100% 100%;
-  bottom: -1px;
-  opacity: 1;
-  position: absolute;
-  width: 100%;
-  height: 2vh;
-  top: 13.5vh;
+  border-radius: 0.15rem;
+  cursor: pointer;
 }
 
 .card-body {
@@ -1558,43 +999,65 @@ div.offcanvas-body {
   opacity: 1;
   top: auto;
   padding: 0.1vw 0.2vw;
+  padding: 0.75vw;
+  // display: none;
 }
 
-.card-title {
-  color: #e5e5e5;
+.card:hover {
+  z-index: 20;
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+  transition: all 0.5s ease-out 0.6s;
 }
 
-.card-text {
-  font-size: calc(8px + 0.5vw);
-}
+// .card:hover .card-description {
+//   z-index: 20;
+//   display: block;
+//   transition: all 0.5s ease-out 0.6s;
+// }
 
 .watch-list-add-btn {
   position: relative;
   float: right;
-  // display: none;
   color: #fff;
   background: none;
   border: none;
 }
 
-// .btn-primary,
-// .btn.btn::active {
-//   border: none;
-//   outline: none;
-//   background: none;
-// }
-
-// .btn-primary,
-// .btn::after {
-//   border: none;
-//   outline: none;
-//   background: none;
-// }
-
-.fa-plus {
-  color: #fff;
+// <i class="fa-solid fa-ban"></i>
+.fa-plus,
+.fa-ban {
   font-size: calc(14px + 0.6vw);
-  // font-weight: 500;
+}
+
+.card-title {
+  color: #fff;
+  font-size: calc(8px + 0.5vw);
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.card-text {
+  font-size: calc(8px + 0.3vw);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #fff;
+  margin-bottom: 0.35vw;
+}
+
+.rating {
+  font-size: calc(8px + 0.3vw);
+  color: grey;
+}
+
+.card-description {
+  font-size: calc(9px + 0.4vw);
+  overflow: hidden;
+  color: grey;
+  display: none;
+  transition: all 0.3s ease-out 0.1s;
 }
 
 // Watch list heading
@@ -1659,6 +1122,10 @@ div.offcanvas-body {
   .movies-and-footer-container {
     top: -10vh;
   }
+
+  .card {
+    width: 16.666666667%;
+  }
 }
 
 @media screen and (min-width: 1281px) and (max-width: 1600px) {
@@ -1674,6 +1141,10 @@ div.offcanvas-body {
   .watch-list-movie-slider,
   .movie-slider-item {
     --items-per-screen: 5;
+  }
+
+  .card {
+    width: 20%;
   }
 
   .my-list-heading {
@@ -1722,6 +1193,10 @@ div.offcanvas-body {
     --items-per-screen: 4;
   }
 
+  .card {
+    width: 25%;
+  }
+
   .watch-list-slider-item,
   .slider-img {
     width: 25%;
@@ -1768,6 +1243,10 @@ div.offcanvas-body {
     --items-per-screen: 3;
   }
 
+  .card {
+    width: 33.333333%;
+  }
+
   .watch-list-slider-item,
   .slider-img {
     width: 33.33333%;
@@ -1812,7 +1291,11 @@ div.offcanvas-body {
 
   .watch-list-movie-slider,
   .movie-slider-item {
-    --items-per-screen: 2;
+    --items-per-screen: 3;
+  }
+
+  .card {
+    width: 33.333333%;
   }
 
   .watch-list-slider-item,

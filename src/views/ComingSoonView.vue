@@ -148,17 +148,45 @@
       </nav>
     </div>
   </div>
-  <center>
-    <h1 class="coming-soon">COMING SOON PAGE</h1>
-  </center>
+
+  <ComingSoonCarousel />
+
+  <div class="coming-soon-container">
+    <h1 class="coming-soon-movies">Coming Soon</h1>
+    <section class="movie-slider-container row">
+      <div class="card" v-for="item in comingSoonList" v-bind:key="item.id">
+        <img :src="item.image" class="card-img-top" alt="Movie Poster" />
+        <div class="card-body">
+          <button class="watch-list-add-btn" v-on:click="addToWatchList(item)">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="card-title">{{ item.name }}</div>
+          <div class="rating">Rating: {{ item.rating }} / 10</div>
+          <div class="card-text">
+            <div>{{ item.duration }} min</div>
+
+            <div>{{ item.release_date }}</div>
+          </div>
+          <div class="card-description">{{ item.description }}</div>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
+import ComingSoonCarousel from "../components/CominsSoonCarousel.vue";
+import axios from "axios";
 export default {
+  components: {
+    ComingSoonCarousel,
+  },
   data() {
     return {
       scTimer: 0,
       scY: 0,
+      comingSoon: [],
+      movies: [],
     };
   },
 
@@ -178,13 +206,81 @@ export default {
         behavior: "smooth",
       });
     },
+
+    watchListExists() {
+      if (localStorage.getItem("watch-key")) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    // method takes in an argument of a movie object
+    addToWatchList(movie) {
+      if (this.watchListExists()) {
+        let jsonWatchList = localStorage.getItem("watch-key");
+        this.watchList = JSON.parse(jsonWatchList);
+
+        // push new array on to watchList array
+        this.watchList.push(movie);
+
+        console.log(this.watchList);
+
+        // convert all data inside watchList variable to JSON
+        jsonWatchList = JSON.stringify(this.watchList);
+
+        localStorage.setItem("watch-key", jsonWatchList);
+      } else {
+        this.watchList.push(movie);
+
+        console.log(this.watchList);
+
+        // convert all data inside watchList variable to JSON
+        let jsonWatchList = JSON.stringify(this.watchList);
+
+        localStorage.setItem("watch-key", jsonWatchList);
+      }
+    },
   },
-  // CodeSpace API import using axios
+
+  computed: {
+    comingSoonList() {
+      return this.movies.filter((movie) => movie.is_coming_soon == "1");
+    },
+  },
+
   mounted() {
+    if (this.watchListExists()) {
+      let jsonWatchList = localStorage.getItem("watch-key");
+      this.watchList = JSON.parse(jsonWatchList);
+    }
+
+    axios
+      .get("https://project-apis.codespace.co.za/api/movies")
+      .then((response) => {
+        this.movies = response.data.data;
+        console.warn(response);
+      });
+
     // Scroll to top Home button
     window.addEventListener("scroll", this.handleScroll);
   },
 };
 </script>
 
-<style></style>
+<style>
+.coming-soon-container {
+  position: relative;
+  top: -10vw;
+}
+
+.coming-soon-movies {
+  /* Using calc to dynamically set font size with a min font size of 12px */
+  font-size: calc(8px + 1.2vw);
+  position: relative;
+  padding: 0 4%;
+  z-index: 11;
+  color: #e5e5e5;
+  margin-bottom: 0.6rem;
+}
+</style>
