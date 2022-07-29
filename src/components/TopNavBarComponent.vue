@@ -253,7 +253,7 @@ export default {
 
 // Username displaying in top navbar
 .display-name {
-  font-size: calc(10px + 0.55vw);
+  font-size: calc(9px + 0.5vw);
   margin-left: 15px;
   color: #fff;
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;

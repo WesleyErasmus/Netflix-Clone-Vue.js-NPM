@@ -47,7 +47,7 @@
               v-model="form.password"
               id="password"
               class="password-input"
-              type="text"
+              type="password"
               name="userPassword"
               placeholder="Password"
             />
