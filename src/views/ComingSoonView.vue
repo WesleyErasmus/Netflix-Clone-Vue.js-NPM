@@ -29,7 +29,11 @@
             v-bind:key="movie.id"
           >
             <!-- Card image -->
-            <img :src="movie.image" class="card-img-top" alt="Movie Poster" />
+            <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
+            <img
+              class="card-img-top"
+              :src="'https://picsum.photos/200/300?' + movie.id"
+            />
 
             <!-- Coming soon banner for movies that are coming soon -->
             <div

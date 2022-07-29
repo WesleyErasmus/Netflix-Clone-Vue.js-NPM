@@ -25,11 +25,6 @@
               <router-link :to="{ path: '/comingsoon' }">
                 <li class="top-nav-btn top-nav-movies-btn">Coming Soon</li>
               </router-link>
-
-              <!-- Watch-list link -->
-              <router-link :to="{ path: '/' }">
-                <li class="top-nav-btn top-nav-movies-btn">Watch List</li>
-              </router-link>
             </ul>
           </div>
 
@@ -43,7 +38,7 @@
               </router-link>
             </div>
 
-            <!-- Container for search icon and account avatar -->
+            <!-- Container account avatar -->
             <div class="top-nav-action-item">
               <!-- User avatar icon -->
               <img
@@ -51,11 +46,12 @@
                 alt=""
                 style="width: 32px; border-radius: 3px"
               />
-
-              <!-- Display username -->
-              <div class="top-nav-user-menu display-name"></div>
             </div>
 
+            <!-- Display username -->
+            <div class="top-nav-action-item display-name">
+              {{ displayName }}
+            </div>
             <!-- Sign out dropdown  -->
             <div class="dropdown">
               <span class="sign-out-dropdown"></span>
@@ -94,6 +90,7 @@
           >
             <!-- Username in Offcanvas header -->
             <div class="offcanvas-header">
+              {{ displayName }}
               <!-- Display username -->
               <h5
                 class="offcanvas-title"
@@ -133,15 +130,13 @@
                   >
                 </li>
 
-                <!-- Watch-list link -->
-                <li class="nav-item">
-                  <router-link :to="{ path: '/' }"> Watch List </router-link>
-                </li>
-
                 <!-- Link to login page -->
                 <li class="nav-item">
                   <router-link :to="{ path: '/login' }">
-                    <a class="nav-link active offcanvas-sign-out" aria-current="page" href="#"
+                    <a
+                      class="nav-link active offcanvas-sign-out"
+                      aria-current="page"
+                      href="#"
                       >Sign Out</a
                     ></router-link
                   >
@@ -154,6 +149,23 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      displayName: "",
+    };
+  },
+
+  mounted() {
+    // Displays the username stored on local storage in webpage
+    if (localStorage.name) {
+      this.displayName = localStorage.name;
+    }
+  },
+};
+</script>
 
 <style lang="scss">
 /* NAVBAR */
@@ -241,7 +253,10 @@
 
 // Username displaying in top navbar
 .display-name {
-  min-width: 10px;
+  font-size: calc(10px + 0.55vw);
+  margin-left: 15px;
+  color: #fff;
+  text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 // Remove from HOME PAGE ONCE SEARCH BAR HAS BEEN MOVED
@@ -320,6 +335,11 @@
   color: #fff !important;
 }
 
+.nav-link:hover,
+.nav-item:hover {
+  opacity: 0.75;
+}
+
 // Offcanvas navbar background
 .offcanvas {
   background-color: transparent !important;
@@ -330,6 +350,8 @@
 // Offcanvas navbar heading
 .offcanvas-header {
   background-color: rgba(0, 0, 0, 0.75);
+  font-size: calc(10px + 0.55vw);
+  border-bottom: 1px solid #fff;
 }
 
 .offcanvas-sign-out {
@@ -350,5 +372,65 @@ div.offcanvas-body {
     transparent
   );
   justify-content: flex-end;
+}
+
+// MEDIA QUERIES
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  // #
+}
+
+@media screen and (min-width: 1281px) and (max-width: 1600px) {
+.top-navbar {
+    height: 68px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 841px) and (max-width: 1280px) {
+  .top-navbar {
+    height: 68px;
+    font-size: 14px;
+  }
+
+  .navbar-toggler {
+    display: block;
+  }
+
+  .top-nav-actions-menu,
+  .top-nav-menu-btns {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 840px) {
+  .top-navbar {
+    height: 68px;
+    font-size: 14px;
+  }
+
+  .navbar-toggler {
+    display: block;
+  }
+
+  .top-nav-menu-btns,
+  .top-nav-actions-menu {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 480px) {
+  .top-navbar {
+    height: 68px;
+    font-size: 14px;
+  }
+
+  .navbar-toggler {
+    display: block;
+  }
+
+  .top-nav-actions-menu,
+  .top-nav-menu-btns {
+    display: none;
+  }
 }
 </style>

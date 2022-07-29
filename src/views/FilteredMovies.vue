@@ -9,7 +9,7 @@
       <router-link :to="{ path: '/' }">
         <i class="fa-solid fa-arrow-left"></i>
       </router-link>
-      <h1 class="search-page-header">Search for Movies and Actors</h1>
+      <h1 class="search-page-header">Search for Movies</h1>
     </div>
 
     <!-- Searchbar container -->
@@ -34,7 +34,11 @@
     <!-- Movies Container -->
     <section class="movie-slider-container row">
       <div class="card" v-for="movie in filteredMovies" :key="movie.id">
-        <img :src="movie.image" class="card-img-top" alt="Movie Poster" />
+        <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
+        <img
+          class="card-img-top"
+          :src="'https://picsum.photos/200/300?' + movie.id"
+        />
 
         <!-- Movie banner added to all movies that are coming soon -->
         <div
@@ -135,25 +139,13 @@ export default {
   computed: {
     // Search function to filter movies
     filteredMovies() {
-      // return this.movies.filter((movie) =>
-      // this.movies.length
-      //     ? Object.keys(this.movies[0])
-      //         .some(key => ('' + movie[key]).toLowerCase().includes(this.search))
-      //     : true
-      // );
-
-      return this.movies.filter((movie) => {
-        const computedObj = {
-          ...movie,
-          // firstName: this.actors.first_name,
-          // lastName: this.actors.last_name,
-        };
-        return Object.keys(computedObj).some((key) =>
-          ("" + computedObj[key])
-            .toLowerCase()
-            .includes(this.search.toLowerCase())
-        );
-      });
+      return this.movies.filter((movie) =>
+        this.movies.length
+          ? Object.keys(this.movies[0]).some((key) =>
+              ("" + movie[key]).toLowerCase().includes(this.search)
+            )
+          : true
+      );
     },
   },
   methods: {

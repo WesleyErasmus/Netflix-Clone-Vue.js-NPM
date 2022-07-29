@@ -16,12 +16,15 @@
         <h1 class="my-list-heading">My Watch List</h1>
 
         <!-- Watch list section wrapper -->
-        <section class="movie-slider-container row">
+        <section id="watchList" class="movie-slider-container row">
           <!-- Movie slider nesting all "looped-over" slider items -->
           <!-- Slider card items -->
           <div class="card" v-for="(movie, id) in watchList" :key="id">
-            <!-- Watch-list card image  -->
-            <img :src="movie.image" class="card-img-top" alt="Movie Poster" />
+            <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
+            <img
+              class="card-img-top"
+              :src="'https://picsum.photos/200/300?' + movie.id"
+            />
 
             <!-- Adding coming soon banner conditionally to all "coming soon movies"  -->
             <div
@@ -91,11 +94,11 @@
         <section class="movie-slider-container row">
           <!-- Movie item -->
           <div class="card" v-for="movie in movies" v-bind:key="movie.id">
-            <!-- <div class="card-img-top"
-                    :style="{'background-image': randomImage()}">
-                    </div> -->
-
-            <img :src="movie.image" class="card-img-top" alt="Movie Poster" />
+            <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
+            <img
+              class="card-img-top"
+              :src="'https://picsum.photos/200/300?' + movie.id"
+            />
 
             <!-- Coming soon banner -->
             <div
@@ -202,12 +205,6 @@ export default {
     };
   },
   methods: {
-    // randomImage() {
-    //   return `url("${
-    //     this.movies.image[Math.floor(Math.random() * this.movies.length)]
-    //   }")`;
-    // },
-
     // Duplicate movie in watch list toast
     duplicateMovieAlert() {
       var x = document.getElementById("snackbar");
@@ -436,7 +433,15 @@ body {
   padding: 0 0.1vw;
   width: 16.6666667%;
   margin-bottom: 0;
-  transition: all 0.3s ease-out 0.1s;
+
+}
+
+.card:hover {
+  position: relative;
+  -webkit-transform: scale(1.01);
+  -ms-transform: scale(1.01);
+  transform: scale(1.01);
+ 
 }
 
 // Movies card image
@@ -618,16 +623,6 @@ body {
     height: 58%;
   }
 
-  .top-navbar {
-    height: 68px;
-    font-size: 14px;
-  }
-
-  .watch-list-movie-slider,
-  .movie-slider-item {
-    --items-per-screen: 5;
-  }
-
   .card {
     width: 20%;
   }
@@ -656,27 +651,8 @@ body {
     height: 50.5%;
   }
 
-  .top-navbar {
-    height: 68px;
-    font-size: 14px;
-  }
-
-  .navbar-toggler {
-    display: block;
-  }
-
-  .top-nav-actions-menu,
-  .top-nav-menu-btns {
-    display: none;
-  }
-
   .my-list-heading {
     bottom: 9vh;
-  }
-
-  .watch-list-movie-slider,
-  .movie-slider-item {
-    --items-per-screen: 4;
   }
 
   .card {
@@ -703,27 +679,8 @@ body {
     height: 49%;
   }
 
-  .top-navbar {
-    height: 68px;
-    font-size: 14px;
-  }
-
-  .navbar-toggler {
-    display: block;
-  }
-
-  .top-nav-menu-btns,
-  .top-nav-actions-menu {
-    display: none;
-  }
-
   .my-list-heading {
     bottom: 2vh;
-  }
-
-  .watch-list-movie-slider,
-  .movie-slider-item {
-    --items-per-screen: 3;
   }
 
   .card {
@@ -755,27 +712,8 @@ body {
     height: 31.5%;
   }
 
-  .top-navbar {
-    height: 68px;
-    font-size: 14px;
-  }
-
-  .navbar-toggler {
-    display: block;
-  }
-
-  .top-nav-actions-menu,
-  .top-nav-menu-btns {
-    display: none;
-  }
-
   .my-list-heading {
     bottom: 2vh;
-  }
-
-  .watch-list-movie-slider,
-  .movie-slider-item {
-    --items-per-screen: 3;
   }
 
   .coming-soon-thumbnail-banner {

@@ -58,7 +58,7 @@
             Please Enter Your Password
           </p>
 
-          <!-- Sign-in buttton link to Home Page  -->
+          <!-- Sign-in btn link to Home Page  -->
           <router-link :to="{ path: '/' }">
             <!-- Button is disabled until form validation is true -->
             <button
@@ -144,14 +144,7 @@ export default {
     // Persist is used to store username to local storage
     persist() {
       localStorage.name = this.form.username;
-      console.log("now pretend I did more stuff...");
     },
-  },
-  mounted() {
-    // Below if statement is used to store username to local storage
-    if (localStorage.name) {
-      this.form.username = localStorage.name;
-    }
   },
 };
 </script>
