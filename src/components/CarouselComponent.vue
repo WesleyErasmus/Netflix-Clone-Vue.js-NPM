@@ -1,9 +1,10 @@
 <template>
   <div class="carousel">
-    <div class="home-page-app-wrapper">
+    <!-- Coming soon page wrapper -->
+    <div class="coming-soon-page-app-wrapper">
       <!-- Home page hero image carousel -->
       <section class="hero-image-trailer-wrapper">
-        <!-- BOOTSTRAP CAROUSEL - fix auto slide -->
+        <!-- Bootstrap CarouselL -->
         <div
           id="carouselExampleCaptions"
           class="carousel slide"
@@ -34,7 +35,7 @@
           <div class="carousel-inner">
             <div class="carousel-item active">
               <img
-                src="https://occ-0-6161-32.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABQCMBLtcppxXsD6dBXpwWTPLWCmvk89ihfn0kKjhxUVPmcUZdgzeDdzrIAW6UGUYDI61C5Ee8ocx8dsDy6IZ3dqNsnGqnCJ9ImDS.webp?r=763"
+                src="../assets/netflix-hero-bg.jpg"
                 class="d-block w-100"
                 alt=""
               />
@@ -90,49 +91,43 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-          <!-- Coming soon watermark -->
-
-          <span class="coming-soon-watermark"> COMING SOON</span>
         </div>
         <!-- END OF BOOTSTRAP CAROUSEL -->
       </section>
     </div>
   </div>
+
+  <!-- Coning soon banner for carousel image -->
+  <div class="lrg-coming-soon-banner">SEE WHAT'S COMING SOON</div>
 </template>
 
-<script></script>
-
 <style lang="scss">
-.home-page-app-wrapper {
-  position: relative;
-  margin: 0;
-  padding: 0;
-}
-
 // Pseudo element used to cover coming soon carousel images
-.home-page-app-wrapper::after {
+.coming-soon-page-app-wrapper::after {
   content: "";
   position: absolute;
-  background: linear-gradient(77deg, rgba(0, 0, 0, 0.6), transparent 85%);
+  background: linear-gradient(77deg, rgba(0, 0, 0, 0.6), transparent 75%);
   top: 0;
   left: 0;
   height: 100%;
   opacity: 1;
-  right: 26%;
+  right: 0;
   z-index: 1;
 }
 // HOME PAGE CAROUSEL STYLING
+
 // Clickable carousel indicators. Indicating number of slides and slide position (located next to watch-list heading)
 .carousel-indicators {
-  bottom: 14vh;
-  z-index: 11;
+  bottom: 8.5vw;
+  z-index: 15;
 }
 
-// Carousel buttons [hidden]
+// Carousel buttons [#]
 .carousel-control-prev,
 .carousel-control-next {
   z-index: 11;
-  display: none;
+  height: 20% !important;
+  top: 20vw;
 }
 
 // Carousel header [hidden]
@@ -145,30 +140,89 @@
   display: none;
 }
 
-// Coming soon hero image container
-.hero-image-trailer-wrapper {
-  position: relative;
-}
-
-/* PAGE HERO IMAGE */
-.hero-static-image {
-  position: relative;
-  width: 100%;
-}
-
-// Coming Soon Watermark
-.coming-soon-watermark {
+// Carousel image coming soon banner
+.lrg-coming-soon-banner {
+  z-index: 12;
   position: absolute;
-  text-align: center;
-  padding: 0.6% 0.8%;
-  font-size: calc(12px + 2.2vw);
-  margin: 0;
+  top: 15vw;
+  text-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 0 4%;
+  font-size: calc(14px + 2.3vw);
   font-weight: bold;
-  bottom: 55%;
-  left: 4%;
-  opacity: 0.8;
-  z-index: 11;
-  border-radius: 0.15rem;
-  text-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  color: #ffffff;
+}
+
+// MEDIA QUERIES
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  .carousel-indicators {
+    bottom: 8.5vw;
+  }
+
+  .lrg-coming-soon-banner {
+    top: 18vw;
+    font-size: calc(13px + 2.3vw);
+  }
+}
+
+@media screen and (min-width: 1281px) and (max-width: 1600px) {
+  .carousel-indicators {
+    bottom: 8.1vw;
+  }
+
+  .lrg-coming-soon-banner {
+    top: 20vw;
+    font-size: calc(13px + 2.2vw);
+  }
+}
+
+@media screen and (min-width: 841px) and (max-width: 1280px) {
+  .carousel-indicators {
+    bottom: 7.6vw;
+  }
+
+  // Carousel buttons [#]
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+
+  .lrg-coming-soon-banner {
+    top: 24vw;
+    font-size: calc(12px + 2.1vw);
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 840px) {
+  .carousel-indicators {
+    bottom: 6.4vw;
+  }
+
+  // Carousel buttons [#]
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+
+  .lrg-coming-soon-banner {
+    top: 24vw;
+    font-size: calc(11px + 2vw);
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 480px) {
+  .carousel-indicators {
+    bottom: 4.2vw;
+  }
+
+  // Carousel buttons [#]
+  .carousel-control-prev,
+  .carousel-control-next {
+    display: none;
+  }
+
+  .lrg-coming-soon-banner {
+    top: 25vw;
+    font-size: calc(10px + 1.5vw);
+  }
 }
 </style>

@@ -1,286 +1,293 @@
 <template>
   <div class="comingSoon">
-    <div class="home-page-top-menu">
-      <nav class="navbar top-navbar fixed-top">
-        <div class="container-fluid top-navbar-inner">
-          <div class="app-logo-and-menu-flex-container">
-            <!-- Home page Netflix logo -->
-            <router-link :to="{ path: '/' }">
-              <img
-                id="home-page-back-to-top"
-                class="home-gage-app-logo"
-                src="../assets/netflix-logo.png"
-                alt="Netflix Logo"
-            /></router-link>
-            <!-- Nav buttons, Home, Watch-list, Coming Soon -->
-            <ul class="top-nav-menu-btns">
-              <li
-                id="pagetop"
-                class="top-nav-btn top-nav-home-btn"
-                v-show="scY > 300"
-                @click="toTop"
-              >
-                Home
-              </li>
-              <router-link :to="{ path: '/comingsoon' }">
-                <li class="top-nav-btn top-nav-movies-btn">Coming Soon</li>
-              </router-link>
-            </ul>
-          </div>
-          <!-- Nav buttons, Search, User Account -->
-          <div class="top-nav-actions-menu">
-            <div class="top-nav-action-item">
-              <div class="-top-search-bar">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="search-icon"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M13 11C13 13.7614 10.7614 16 8 16C5.23858 16 3 13.7614 3 11C3 8.23858 5.23858 6 8 6C10.7614 6 13 8.23858 13 11ZM14.0425 16.2431C12.5758 17.932 10.4126 19 8 19C3.58172 19 0 15.4183 0 11C0 6.58172 3.58172 3 8 3C12.4183 3 16 6.58172 16 11C16 11.9287 15.8417 12.8205 15.5507 13.6497L24.2533 18.7028L22.7468 21.2972L14.0425 16.2431Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-            <div class="top-nav-action-item">
-              <!-- Display username -->
-              <div class="top-nav-user-menu display-name"></div>
-            </div>
-            <div class="dropdown">
-              <span class="sign-out-dropdown"></span>
-              <div class="dropdown-content">
-                <!-- Sign-out link to About Page  -->
-                <router-link :to="{ path: '/about' }">
-                  <button class="home-page-sign-out-btn">Sign out</button>
-                </router-link>
-              </div>
-            </div>
-          </div>
+    <!-- NAVBAR COMPONENT -->
+    <TopNavBarComponent />
+    <!-- NAVBAR COMPONENT -->
 
-          <!-- Navbar hamburger button -->
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar"
-          >
-            <!-- Hamburger icon -->
-            <span><i class="fa-solid fa-user"></i></span>
-            <span class="sign-out-dropdown"></span>
-          </button>
+    <!-- Back arrow link to home page -->
+    <router-link :to="{ path: '/' }">
+      <i id="back-arrow" class="fa-solid fa-arrow-left"></i>
+    </router-link>
+
+    <!-- CAROUSEL COMPONENT -->
+    <CarouselComponent />
+    <!-- CAROUSEL COMPONENT -->
+
+    <!-- Width and length container for sizing -->
+    <div class="wlc">
+      <!--Coming soon Movie container -->
+      <div class="coming-soon-container">
+        <!-- Coming soon page header -->
+        <h1 class="coming-soon-movies">Coming Soon</h1>
+
+        <!-- Movies container -->
+        <section class="movie-slider-container row">
+          <!-- Movie card -->
           <div
-            class="offcanvas offcanvas-end"
-            tabindex="-1"
-            id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel"
+            class="card"
+            v-for="movie in comingSoonList"
+            v-bind:key="movie.id"
           >
-            <!-- Username in Offcanvas header -->
-            <div class="offcanvas-header">
-              <!-- Display username -->
-              <h5
-                class="offcanvas-title"
-                id="offcanvasNavbarLabel display-name"
-              ></h5>
+            <!-- Card image -->
+            <img :src="movie.image" class="card-img-top" alt="Movie Poster" />
+
+            <!-- Coming soon banner for movies that are coming soon -->
+            <div
+              v-if="movie.is_coming_soon == 1"
+              :class="{
+                comingSoonThumbnailBanner: movie.is_coming_soon == 1,
+              }"
+            >
+              COMING SOON
+            </div>
+
+            <!-- Movie card body -->
+            <div class="card-body">
+              <!-- Btn to add movies to the watch-list -->
               <button
-                type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-              ></button>
-            </div>
-            <!-- Offcanvas body menu-->
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <router-link :to="{ path: '/' }">
-                    <a class="nav-link active" aria-current="page" href="#"
-                      >Home</a
-                    ></router-link
-                  >
-                </li>
-                <li class="nav-item">
-                  <router-link :to="{ path: '/watchlist' }">
-                    <a class="nav-link active" aria-current="page" href="#"
-                      >Watch List</a
-                    ></router-link
-                  >
-                </li>
-                <li class="nav-item">
-                  <router-link :to="{ path: '/comingsoon' }">
-                    <a class="nav-link active" aria-current="page" href="#"
-                      >Coming Soon</a
-                    ></router-link
-                  >
-                </li>
-                <li class="nav-item">
-                  <router-link :to="{ path: '/about' }">
-                    <a class="nav-link active" aria-current="page" href="#"
-                      >Sign Out</a
-                    ></router-link
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"></a>
-                </li>
-              </ul>
-              <!-- Offcanvas search bar -->
-              <form class="d-flex" role="search">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button class="btn btn-outline-success" type="submit">
-                  Search
+                class="watch-list-add-btn"
+                v-on:click="addMovieToWatchList(movie)"
+              >
+                <i class="fa-solid fa-plus"></i>
+              </button>
+              <div class="card-inner-body">
+                <!-- Movie card title -->
+                <div class="card-title">{{ movie.name }}</div>
+
+                <div v-show="movie.showHide">
+                  <!-- Movie duration and release date -->
+                  <div class="card-duration-and-release-date">
+                    <div>{{ movie.duration }}m</div>
+                    <div>{{ movie.release_date }}</div>
+                  </div>
+
+                  <div class="rating">Rating: {{ movie.rating }} / 10</div>
+                  <!-- Movie description -->
+                  <div class="card-description">{{ movie.description }}</div>
+
+                  <!-- Movie actors -->
+                  <h6 class="actor-heading">Cast:</h6>
+                  <!-- V-for to loop through the actors nested array -->
+                  <div v-for="actor in movie.actors" :key="actor.id">
+                    <!-- Actor names -->
+                    <div class="actor-name">
+                      {{ actor.first_name }} {{ actor.last_name }}
+                    </div>
+                  </div>
+                </div>
+                <!-- End of v-show -->
+                <button
+                  class="card-show-more-btn"
+                  v-on:click="movie.showHide = !movie.showHide"
+                >
+                  <i class="fa-solid fa-chevron-down"></i>
                 </button>
-              </form>
+              </div>
+              <!-- end of inner body -->
             </div>
           </div>
-        </div>
-      </nav>
-    </div>
-  </div>
-
-  <ComingSoonCarousel />
-
-  <div class="coming-soon-container">
-    <h1 class="coming-soon-movies">Coming Soon</h1>
-    <section class="movie-slider-container row">
-      <div class="card" v-for="item in comingSoonList" v-bind:key="item.id">
-        <img :src="item.image" class="card-img-top" alt="Movie Poster" />
-        <div class="card-body">
-          <button class="watch-list-add-btn" v-on:click="addToWatchList(item)">
-            <i class="fa-solid fa-plus"></i>
-          </button>
-          <div class="card-title">{{ item.name }}</div>
-          <div class="rating">Rating: {{ item.rating }} / 10</div>
-          <div class="card-text">
-            <div>{{ item.duration }} min</div>
-
-            <div>{{ item.release_date }}</div>
-          </div>
-          <div class="card-description">{{ item.description }}</div>
-        </div>
+          <!-- End of movie card -->
+        </section>
       </div>
-    </section>
+      <!-- End of movies section -->
+
+      <!-- Toast component for messages of duplicate movies and max movies in watch list -->
+      <ToastComponent />
+
+      <!-- FOOTER COMPONENT -->
+      <FooterComponent />
+      <!-- FOOTER COMPONENT -->
+    </div>
+    <!-- End of width and length container -->
   </div>
 </template>
 
 <script>
-import ComingSoonCarousel from "../components/CominsSoonCarousel.vue";
+// CodeSpace Movies API import
 import axios from "axios";
+
+// Top Navbar component import
+import TopNavBarComponent from "../components/TopNavBarComponent.vue";
+
+// Hero carousel component import
+import CarouselComponent from "../components/CarouselComponent.vue";
+
+// // Footer component import
+import FooterComponent from "../components/FooterComponent.vue";
+
+// Toast import
+import ToastComponent from "../components/ToastComponent.vue";
+
 export default {
   components: {
-    ComingSoonCarousel,
+    TopNavBarComponent,
+    CarouselComponent,
+    FooterComponent,
+    ToastComponent,
   },
   data() {
     return {
-      scTimer: 0,
-      scY: 0,
-      comingSoon: [],
+      watchList: [],
       movies: [],
     };
   },
 
   methods: {
-    // Scroll to top Home button
-    handleScroll: function () {
-      if (this.scTimer) return;
-      this.scTimer = setTimeout(() => {
-        this.scY = window.scrollY;
-        clearTimeout(this.scTimer);
-        this.scTimer = 0;
-      }, 100);
-    },
-    toTop: function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+    // Duplicate movie in watch list toast
+    duplicateMovieAlert() {
+      var x = document.getElementById("snackbar");
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000);
     },
 
-    watchListExists() {
-      if (localStorage.getItem("watch-key")) {
-        return true;
-      } else {
-        return false;
+    // Watch list movie limit toast
+    watchListFullAlert() {
+      var x = document.getElementById("snackbar2");
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000);
+    },
+
+    // Add movies to watch-list function
+    addMovieToWatchList(movie) {
+      // Ensure that the watch-list array is not empty
+      if (!this.watchList) {
+        return;
       }
+
+      // Prevents duplicate movies in the watchList
+      if (this.watchList.some((e) => e == movie)) {
+        this.duplicateMovieAlert();
+        return;
+      }
+
+      // Prevents more than 20 movies from being added to the watch-list array
+      if (this.watchList.length >= 20) {
+        this.watchListFullAlert();
+        return;
+      }
+
+      // Adding movies to the front of the watchList
+      this.watchList.unshift(movie);
+
+      // Function for saving movies to local storage
+      this.saveMovieToLocalStorage();
+
+      console.log(this.watchList);
     },
 
-    // method takes in an argument of a movie object
-    addToWatchList(movie) {
-      if (this.watchListExists()) {
-        let jsonWatchList = localStorage.getItem("watch-key");
-        this.watchList = JSON.parse(jsonWatchList);
+    // Function for removing movies from the watch-list
+    removeMovieFromWatchList(movie) {
+      const remove = this.watchList.filter((i) => i != movie);
 
-        // push new array on to watchList array
-        this.watchList.push(movie);
+      this.watchList = remove;
 
-        console.log(this.watchList);
+      this.saveMovieToLocalStorage();
+    },
 
-        // convert all data inside watchList variable to JSON
-        jsonWatchList = JSON.stringify(this.watchList);
-
-        localStorage.setItem("watch-key", jsonWatchList);
-      } else {
-        this.watchList.push(movie);
-
-        console.log(this.watchList);
-
-        // convert all data inside watchList variable to JSON
-        let jsonWatchList = JSON.stringify(this.watchList);
-
-        localStorage.setItem("watch-key", jsonWatchList);
-      }
+    // Function for saving movies to local storage
+    saveMovieToLocalStorage() {
+      const parsed = JSON.stringify(this.watchList);
+      localStorage.setItem("movies-in-watch-list", parsed);
     },
   },
-
   computed: {
+    // Function for filtering out all coming soon 1 movies
     comingSoonList() {
       return this.movies.filter((movie) => movie.is_coming_soon == "1");
     },
   },
-
   mounted() {
-    if (this.watchListExists()) {
-      let jsonWatchList = localStorage.getItem("watch-key");
-      this.watchList = JSON.parse(jsonWatchList);
+    // FInally display local storage movies in the dom
+    if (localStorage.getItem("movies-in-watch-list")) {
+      try {
+        this.watchList = JSON.parse(
+          localStorage.getItem("movies-in-watch-list")
+        );
+      } catch (e) {
+        localStorage.removeItem("movies-in-watch-list");
+      }
     }
 
+    // CodeSpace API import using axios
     axios
       .get("https://project-apis.codespace.co.za/api/movies")
       .then((response) => {
         this.movies = response.data.data;
         console.warn(response);
       });
-
-    // Scroll to top Home button
-    window.addEventListener("scroll", this.handleScroll);
   },
 };
 </script>
 
-<style>
-.coming-soon-container {
-  position: relative;
-  top: -10vw;
+<style lang="scss">
+/* Top page back button */
+#back-arrow {
+  position: absolute;
+  z-index: 20;
+  top: 4vw;
+  margin: 0 4%;
 }
 
+/* Used for spacing */
+.wlc {
+  position: relative;
+  top: -9vw;
+}
+
+/* Coming soon movies container */
+.coming-soon-container {
+  position: relative;
+  top: -2vw;
+}
+
+/* Coming soon heading */
 .coming-soon-movies {
   /* Using calc to dynamically set font size with a min font size of 12px */
-  font-size: calc(8px + 1.2vw);
+  font-size: calc(8px + 1vw);
   position: relative;
   padding: 0 4%;
   z-index: 11;
   color: #e5e5e5;
-  margin-bottom: 0.6rem;
+}
+
+// MEDIA QUERIES
+@media screen and (min-width: 1601px) and (max-width: 1920px) {
+  //#
+}
+
+@media screen and (min-width: 1281px) and (max-width: 1600px) {
+  /* Top page back button */
+  #back-arrow {
+    top: 5vw;
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 841px) and (max-width: 1280px) {
+  /* Top page back button */
+  #back-arrow {
+    top: 7vw;
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 840px) {
+  /* Top page back button */
+  #back-arrow {
+    top: 11vw;
+    font-size: 1.8rem;
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 480px) {
+  /* Top page back button */
+  #back-arrow {
+    top: 13vw;
+    font-size: 1.5rem;
+  }
 }
 </style>

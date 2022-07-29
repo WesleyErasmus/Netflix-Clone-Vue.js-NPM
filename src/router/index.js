@@ -1,10 +1,13 @@
+// Global View and Component Registry
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import AboutView from "../views/AboutView.vue";
+import LogInView from "../views/LogInView.vue";
 import ComingSoonView from "../views/ComingSoonView.vue";
+import SearchMovies from "../views/FilteredMovies.vue";
+
 
 const routes = [
-  {
+ {
     // this is my home page
     path: "/",
     name: "home",
@@ -12,15 +15,21 @@ const routes = [
   },
   {
     // this will be my login page - change names accordingly
-    path: "/about",
-    name: "about",
-    component: AboutView,
+    path: "/login",
+    name: "login",
+    component: LogInView,
   },
   {
     // this will be my Coming Soon page - change names accordingly
     path: "/comingsoon",
     name: "comingsoon",
     component: ComingSoonView,
+  },
+  {
+    // this is my filtered movies page
+    path: "/search",
+    name: "search",
+    component: SearchMovies,
   },
 ];
 
@@ -30,29 +39,3 @@ const router = createRouter({
 });
 
 export default router;
-
-// // Watch-list slider handles
-document.addEventListener("click", (e) => {
-  let handle;
-  if (e.target.matches(".sliderHandles")) {
-    handle = e.target;
-  } else {
-    handle = e.target.closest(".sliderHandles");
-  }
-  if (handle != null) onHandleClick(handle);
-});
-
-function onHandleClick(handle) {
-  const slider = handle
-    .closest(".watch-list-movie-slider-wrapper")
-    .querySelector(".movieSlider");
-  const sliderIndex = parseInt(
-    getComputedStyle(slider).getPropertyValue("--slider-index")
-  );
-  if (handle.classList.contains("nextHandle")) {
-    slider.style.setProperty("--slider-index", sliderIndex + 1);
-  }
-  if (handle.classList.contains("prevHandle")) {
-    slider.style.setProperty("--slider-index", sliderIndex - 1);
-  }
-}
