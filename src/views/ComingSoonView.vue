@@ -20,22 +20,21 @@
         <!-- Coming soon page header -->
         <h1 class="coming-soon-movies">Coming Soon</h1>
 
-        <!-- Movies container -->
+       <!-- Movie Slider container -->
         <section class="movie-slider-container row">
-          <!-- Movie card -->
+          <!-- Movie item -->
           <div
             class="card"
             v-for="movie in comingSoonList"
             v-bind:key="movie.id"
           >
-            <!-- Card image -->
             <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
             <img
               class="card-img-top"
               :src="'https://picsum.photos/200/300?' + movie.id"
             />
 
-            <!-- Coming soon banner for movies that are coming soon -->
+            <!-- Coming soon banner -->
             <div
               v-if="movie.is_coming_soon == 1"
               :class="{
@@ -47,18 +46,18 @@
 
             <!-- Movie card body -->
             <div class="card-body">
-              <!-- Btn to add movies to the watch-list -->
               <button
-                class="watch-list-add-btn"
-                v-on:click="addMovieToWatchList(movie)"
+                class="card-show-more-btn"
+                v-on:click="movie.showHide = !movie.showHide"
               >
-                <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid fa-chevron-down"></i>
               </button>
               <div class="card-inner-body">
                 <!-- Movie card title -->
                 <div class="card-title">{{ movie.name }}</div>
 
-                <div v-show="movie.showHide">
+                <div v-show="movie.showHide"
+                class="v-show-start">
                   <!-- Movie duration and release date -->
                   <div class="card-duration-and-release-date">
                     <div>{{ movie.duration }}m</div>
@@ -68,7 +67,6 @@
                   <div class="rating">Rating: {{ movie.rating }} / 10</div>
                   <!-- Movie description -->
                   <div class="card-description">{{ movie.description }}</div>
-
                   <!-- Movie actors -->
                   <h6 class="actor-heading">Cast:</h6>
                   <!-- V-for to loop through the actors nested array -->
@@ -80,12 +78,7 @@
                   </div>
                 </div>
                 <!-- End of v-show -->
-                <button
-                  class="card-show-more-btn"
-                  v-on:click="movie.showHide = !movie.showHide"
-                >
-                  <i class="fa-solid fa-chevron-down"></i>
-                </button>
+                
               </div>
               <!-- end of inner body -->
             </div>
@@ -155,10 +148,26 @@ export default {
       }, 3000);
     },
 
+     // Watch list movie successfully add toast
+    watchListAddSuccessAlert() {
+      var x = document.getElementById("snackbar3");
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000);
+    },
+
     // Add movies to watch-list function
+     // Add movies to watch-list function
     addMovieToWatchList(movie) {
       // Ensure that the watch-list array is not empty
       if (!this.watchList) {
+        return;
+      }
+
+       // Prevents more than 20 movies from being added to the watch-list array
+      if (this.watchList.length >= 20) {
+        this.watchListFullAlert();
         return;
       }
 
@@ -168,22 +177,24 @@ export default {
         return;
       }
 
-      // Prevents more than 20 movies from being added to the watch-list array
-      if (this.watchList.length >= 20) {
-        this.watchListFullAlert();
+      // Prevents coming soon movies in the watchList
+      if (movie.is_coming_soon == 1) {
         return;
       }
 
       // Adding movies to the front of the watchList
-      this.watchList.unshift(movie);
-
-      // Function for saving movies to local storage
+      if (this.watchList.unshift(movie)) {
+         // Movie added message
+          this.watchListAddSuccessAlert();
+      }
+      
+      // Save to local storage function
       this.saveMovieToLocalStorage();
 
       console.log(this.watchList);
     },
 
-    // Function for removing movies from the watch-list
+    // Remove movies from watch-list function
     removeMovieFromWatchList(movie) {
       const remove = this.watchList.filter((i) => i != movie);
 
@@ -192,7 +203,7 @@ export default {
       this.saveMovieToLocalStorage();
     },
 
-    // Function for saving movies to local storage
+    // Save movies to watch-list function
     saveMovieToLocalStorage() {
       const parsed = JSON.stringify(this.watchList);
       localStorage.setItem("movies-in-watch-list", parsed);

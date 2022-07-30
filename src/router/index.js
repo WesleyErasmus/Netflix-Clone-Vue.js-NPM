@@ -4,23 +4,30 @@ import HomeView from "../views/HomeView.vue";
 import LogInView from "../views/LogInView.vue";
 import ComingSoonView from "../views/ComingSoonView.vue";
 import SearchMovies from "../views/FilteredMovies.vue";
+import WatchListView from "../views/WatchListView.vue"
 
 
 const routes = [
- {
+  {
     // this is my home page
     path: "/",
     name: "home",
     component: HomeView,
   },
   {
-    // this will be my login page - change names accordingly
+    // this will be my login page
     path: "/login",
     name: "login",
     component: LogInView,
   },
   {
-    // this will be my Coming Soon page - change names accordingly
+    // this will be my Coming Soon page
+    path: "/watchlist",
+    name: "watchlist",
+    component: WatchListView,
+  },
+  {
+    // this will be my Coming Soon page
     path: "/comingsoon",
     name: "comingsoon",
     component: ComingSoonView,

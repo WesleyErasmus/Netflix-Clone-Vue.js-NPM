@@ -19,11 +19,16 @@
             <!-- Nav link buttons -->
             <ul class="top-nav-menu-btns">
               <!-- Home button - takes you back to top of page -->
-              <li class="top-nav-btn top-nav-home-btn"><a href="#">Home</a></li>
+              <li class="top-nav-btn top-nav-home-btn"><a href="#">Back to top</a></li>
 
               <!-- Coming soon page link -->
               <router-link :to="{ path: '/comingsoon' }">
                 <li class="top-nav-btn top-nav-movies-btn">Coming Soon</li>
+              </router-link>
+
+               <!-- Watch-list page link -->
+              <router-link :to="{ path: '/watchlist' }">
+                <li class="top-nav-btn top-nav-movies-btn">Your Watch List</li>
               </router-link>
             </ul>
           </div>
@@ -111,7 +116,7 @@
                   <!-- Home page link to app home page -->
                   <router-link :to="{ path: '/' }">
                     <a class="nav-link active" aria-current="page"
-                      >Home</a
+                      >Back to top</a
                     ></router-link
                   >
                 </li>
@@ -126,6 +131,15 @@
                   <router-link :to="{ path: '/comingsoon' }">
                     <a class="nav-link active" aria-current="page" href="#"
                       >Coming Soon</a
+                    ></router-link
+                  >
+                </li>
+
+                <!-- Link to Watch-list page -->
+                <li class="nav-item">
+                  <router-link :to="{ path: '/watchlist' }">
+                    <a class="nav-link active" aria-current="page" href="#"
+                      >Your Watch List</a
                     ></router-link
                   >
                 </li>
@@ -230,8 +244,7 @@ export default {
 
 // Home button font styling
 .top-nav-home-btn {
-  color: #fff;
-  font-weight: 700;
+ border-top: 1px solid rgba(255, 255, 255, 0.216);
   cursor: pointer;
 }
 
@@ -253,7 +266,7 @@ export default {
 
 // Username displaying in top navbar
 .display-name {
-  font-size: calc(9px + 0.5vw);
+  font-size: calc(8px + 0.4vw);
   margin-left: 15px;
   color: #fff;
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;

@@ -37,21 +37,28 @@
             </div>
 
             <!-- Watch-list card body -->
+             <!-- Movie card body -->
             <div class="card-body">
-              <!-- Btn used to remove movies from the watch-list -->
+              <!-- WatchList show hide button -->
               <button
-                class="watch-list-add-btn"
-                v-on:click="removeMovieFromWatchList(movie)"
+                class="card-show-more-btn"
+                v-on:click="movie.SH = !movie.SH"
               >
-                <!-- FA tick icon -->
-                <i class="fa-solid fa-check"></i>
+                <i class="fa-solid fa-chevron-down"></i>
               </button>
-
               <div class="card-inner-body">
                 <!-- Movie card title -->
                 <div class="card-title">{{ movie.name }}</div>
-
-                <div v-show="movie.showHide">
+                <!-- WatchList show hide dropdown -->
+                <div v-show="movie.SH"
+                class="v-show-start">
+                  <!-- Btn to add movies to the watch-list -->
+                  <button
+                    class="watch-list-add-btn"
+                    v-on:click="removeMovieFromWatchList(movie)"
+                  >
+                    <i class="fa-solid fa-minus"></i>
+                  </button>
                   <!-- Movie duration and release date -->
                   <div class="card-duration-and-release-date">
                     <div>{{ movie.duration }}m</div>
@@ -61,7 +68,6 @@
                   <div class="rating">Rating: {{ movie.rating }} / 10</div>
                   <!-- Movie description -->
                   <div class="card-description">{{ movie.description }}</div>
-
                   <!-- Movie actors -->
                   <h6 class="actor-heading">Cast:</h6>
                   <!-- V-for to loop through the actors nested array -->
@@ -73,16 +79,12 @@
                   </div>
                 </div>
                 <!-- End of v-show -->
-                <button
-                  class="card-show-more-btn"
-                  v-on:click="movie.showHide = !movie.showHide"
-                >
-                  <i class="fa-solid fa-chevron-down"></i>
-                </button>
+                
               </div>
               <!-- end of inner body -->
             </div>
           </div>
+          <!-- End of movie card -->
           <!-- End of movie slider container -->
         </section>
         <!-- End of watch-list section -->
@@ -93,7 +95,11 @@
         <!-- Movie Slider container -->
         <section class="movie-slider-container row">
           <!-- Movie item -->
-          <div class="card" v-for="movie in movies" v-bind:key="movie.id">
+          <div
+            class="card"
+            v-for="movie in availableMoviesList"
+            v-bind:key="movie.id"
+          >
             <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
             <img
               class="card-img-top"
@@ -112,18 +118,25 @@
 
             <!-- Movie card body -->
             <div class="card-body">
-              <!-- Btn to add movies to the watch-list -->
               <button
-                class="watch-list-add-btn"
-                v-on:click="addMovieToWatchList(movie)"
+                class="card-show-more-btn"
+                v-on:click="movie.showHide = !movie.showHide"
               >
-                <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid fa-chevron-down"></i>
               </button>
               <div class="card-inner-body">
                 <!-- Movie card title -->
                 <div class="card-title">{{ movie.name }}</div>
 
-                <div v-show="movie.showHide">
+                <div class="v-show-start"
+                v-show="movie.showHide">
+                  <!-- Btn to add movies to the watch-list -->
+                  <button
+                    class="watch-list-add-btn"
+                    v-on:click="addMovieToWatchList(movie)"
+                  >
+                    <i class="fa-solid fa-plus"></i>
+                  </button>
                   <!-- Movie duration and release date -->
                   <div class="card-duration-and-release-date">
                     <div>{{ movie.duration }}m</div>
@@ -143,14 +156,8 @@
                     </div>
                   </div>
                 </div>
-
                 <!-- End of v-show -->
-                <button
-                  class="card-show-more-btn"
-                  v-on:click="movie.showHide = !movie.showHide"
-                >
-                  <i class="fa-solid fa-chevron-down"></i>
-                </button>
+                
               </div>
               <!-- end of inner body -->
             </div>
@@ -200,7 +207,7 @@ export default {
     return {
       showHide: true,
       watchList: [],
-      movies: "null",
+      movies: [],
       actors: [],
     };
   },
@@ -223,16 +230,19 @@ export default {
       }, 3000);
     },
 
+    // Watch list movie successfully add toast
+    watchListAddSuccessAlert() {
+      var x = document.getElementById("snackbar3");
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000);
+    },
+
     // Add movies to watch-list function
     addMovieToWatchList(movie) {
       // Ensure that the watch-list array is not empty
       if (!this.watchList) {
-        return;
-      }
-
-      // Prevents duplicate movies in the watchList
-      if (this.watchList.some((e) => e == movie)) {
-        this.duplicateMovieAlert();
         return;
       }
 
@@ -242,8 +252,22 @@ export default {
         return;
       }
 
+      // Prevents duplicate movies in the watchList
+      if (this.watchList.some((e) => e == movie)) {
+        this.duplicateMovieAlert();
+        return;
+      }
+
+      // Prevents coming soon movies in the watchList
+      if (movie.is_coming_soon == 1) {
+        return;
+      }
+
       // Adding movies to the front of the watchList
-      this.watchList.unshift(movie);
+      if (this.watchList.unshift(movie)) {
+        // Movie added message
+        this.watchListAddSuccessAlert();
+      }
 
       // Save to local storage function
       this.saveMovieToLocalStorage();
@@ -266,7 +290,12 @@ export default {
       localStorage.setItem("movies-in-watch-list", parsed);
     },
   },
-
+  computed: {
+    // Function for filtering only displaying movies that are available, and removing all coming soon movies
+    availableMoviesList() {
+      return this.movies.filter((movie) => movie.is_coming_soon == "0");
+    },
+  },
   mounted() {
     // Finally display local storage movies in the DOM
     if (localStorage.getItem("movies-in-watch-list")) {
@@ -379,12 +408,12 @@ body {
 }
 
 // Watch-list remove btn
-.fa-check {
-  font-size: calc(12px + 0.6vw);
+.fa-minus {
+   font-size: calc(10px + 0.2vw);
   color: #e5e5e5;
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-.fa-check:hover {
+.fa-minus:hover {
   opacity: 0.75;
 }
 
@@ -415,10 +444,14 @@ body {
   justify-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
-  position: relative;
   margin: 0 4.2%;
   margin-bottom: 3%;
   z-index: 3;
+  position: relative;
+}
+
+#watchList {
+  z-index: 12;
 }
 
 // Movies card
@@ -433,15 +466,40 @@ body {
   padding: 0 0.1vw;
   width: 16.6666667%;
   margin-bottom: 0;
-
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
-.card:hover {
-  position: relative;
-  -webkit-transform: scale(1.01);
-  -ms-transform: scale(1.01);
-  transform: scale(1.01);
- 
+.card:hover .card-img-top  {
+  opacity: 0.9;
+}
+
+.v-show-start {
+  z-index: 21;
+  position: absolute;
+  background: #141414;
+  background-image: linear-gradient(
+    180deg,
+    hsla(0, 0%, 8%, 0) 0,
+    hsla(0, 0%, 8%, 0.15) 15%,
+    hsla(0, 0%, 8%, 0.35) 29%,
+    hsla(0, 0%, 8%, 0.58) 44%,
+    #141414 68%,
+    #141414
+  );
+  background-position: 0 top;
+  background-repeat: repeat-x;
+  background-size: 100% 100%;
+  opacity: 1;
+  right: 0;
+  left: -2px;
+  margin: 0;
+  margin-top: 5px;
+  padding: 0.9rem;
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+  border-bottom: 2px solid #1c1b1b ;
+  border-left: 2px solid #1c1b1b ;
+  border-right: 2px solid #1c1b1b ;
 }
 
 // Movies card image
@@ -450,42 +508,6 @@ body {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   cursor: pointer;
-}
-
-// Banner added to all movies that are coming soon
-.comingSoonThumbnailBanner {
-  position: absolute;
-  font-size: calc(7px + 0.2vw);
-  font-weight: bold;
-  color: #e5e5e5f4;
-  background: #e50914df;
-  padding: 0.2vw 0.75vw;
-  min-width: 10%;
-}
-
-.card-show-more-btn {
-  margin: 3px;
-  margin-bottom: 5px;
-  background-color: transparent;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid grey;
-}
-
-.card-show-more-btn:hover {
-  border: 1px solid #fff;
-}
-
-.fa-chevron-down {
-  z-index: 25;
-  font-size: calc(9px + 0.2vw);
-  color: #fff;
-}
-
-.card-show-more-btn :hover {
-  opacity: 0.75;
-  transform: scale(1.1);
 }
 
 // Movie card body
@@ -507,12 +529,46 @@ body {
   opacity: 1;
   top: auto;
   padding: 0.3vw;
-  margin: 2px;
   position: relative;
 }
 
+// Banner added to all movies that are coming soon
+.comingSoonThumbnailBanner {
+  position: absolute;
+  font-size: calc(7px + 0.2vw);
+  font-weight: bold;
+  color: #e5e5e5f4;
+  background: #e50914df;
+  padding: 0.2vw 0.75vw;
+  min-width: 10%;
+}
+
+.card-show-more-btn {
+  float: right;
+  margin: 3px;
+  margin-bottom: 5px;
+  background-color: transparent;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid grey;
+}
+
+.card-show-more-btn:hover {
+  border: 1px solid #fff;
+}
+
+.fa-chevron-down {
+  z-index: 25;
+  font-size: calc(9px + 0.2vw);
+  color: #fff;
+}
+
+.card-show-more-btn :hover {
+  opacity: 0.75;
+}
+
 .card-inner-body {
-  // position:unset;
   width: 100%;
   z-index: 20;
   background: #141414;
@@ -524,7 +580,7 @@ body {
   color: rgba(255, 255, 255, 0.799);
   font-size: calc(8px + 0.4vw);
   margin: 0;
-  margin-bottom: 0;
+  margin-bottom: 4px;
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
@@ -549,15 +605,31 @@ body {
   color: rgba(199, 199, 199, 0.87);
   display: flex;
   justify-content: space-between;
+  margin-top: 5px;
 }
 
 // Movie card description
 .card-description {
-  font-size: calc(8px + 0.4vw);
+   background: #141414;
+  background-image: linear-gradient(
+    180deg,
+    hsla(0, 0%, 8%, 0) 0,
+    hsla(0, 0%, 8%, 0.15) 15%,
+    hsla(0, 0%, 8%, 0.35) 29%,
+    hsla(0, 0%, 8%, 0.58) 44%,
+    #141414 68%,
+    #141414
+  );
+  background-position: 0 top;
+  background-repeat: repeat-x;
+  background-size: 100% 100%;
+  opacity: 1;
+  font-size: calc(8px + 0.39vw);
   overflow: hidden;
   color: rgb(211, 211, 211);
   transition: all 0.3s ease-out 0.1s;
-  // padding: 0.35vw;
+  padding: 0.25vw;
+  text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 // Movie card actor heading
@@ -568,7 +640,7 @@ body {
   padding-bottom: 0;
   padding-top: 0.25vw;
   margin-top: 0.5vw;
-  border-top: 1px solid rgba(239, 237, 237, 0.649);
+  // border-top: 1px solid rgba(239, 237, 237, 0.649);
 }
 
 // Movie card actor names
@@ -576,24 +648,34 @@ body {
   font-size: calc(9px + 0.2vw);
   color: #575757;
   color: rgba(108, 108, 255, 0.881);
+  padding: 0.07vw 0.25vw 0vw 0.25vw;
 }
 
 // Add to watch list btn
 .watch-list-add-btn {
   position: relative;
-  float: right;
   color: rgb(199, 199, 199);
   background: none;
   border: none;
   z-index: 25;
+  background-color: transparent;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid grey;
+  padding: 0;
+  margin-bottom: 7px;
 }
+
+.watch-list-add-btn:hover {
+   border: 1px solid #fff;
+}
+
 // Watch list plus icon
 .fa-plus {
-  margin-top: 3px;
-  font-size: calc(22px + 0.5vw);
-  // font-size: calc(9px + 0.2vw);
+  font-size: calc(10px + 0.2vw);
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .fa-plus:hover {
   opacity: 0.75;

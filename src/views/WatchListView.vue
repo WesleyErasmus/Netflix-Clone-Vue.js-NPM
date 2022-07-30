@@ -9,7 +9,7 @@
       <router-link :to="{ path: '/' }">
         <i class="fa-solid fa-arrow-left"></i>
       </router-link>
-      <h1 class="search-page-header">Search for Movies</h1>
+      <h1 class="search-page-header">Search for Movies In your Watch List</h1>
     </div>
 
     <!-- Searchbar container -->
@@ -31,21 +31,18 @@
       </form>
     </div>
 
-      <!-- Movie Slider container -->
-        <section class="movie-slider-container row">
-          <!-- Movie item -->
-          <div
-            class="card"
-            v-for="movie in availableMoviesList"
-            v-bind:key="movie.id"
-          >
+   <!-- Watch list section wrapper -->
+        <section id="watchList" class="movie-slider-container row">
+          <!-- Movie slider nesting all "looped-over" slider items -->
+          <!-- Slider card items -->
+          <div class="card" v-for="(movie, id) in watchList" :key="id">
             <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
             <img
               class="card-img-top"
               :src="'https://picsum.photos/200/300?' + movie.id"
             />
 
-            <!-- Coming soon banner -->
+            <!-- Adding coming soon banner conditionally to all "coming soon movies"  -->
             <div
               v-if="movie.is_coming_soon == 1"
               :class="{
@@ -55,7 +52,8 @@
               COMING SOON
             </div>
 
-            <!-- Movie card body -->
+            <!-- Watch-list card body -->
+             <!-- Movie card body -->
             <div class="card-body">
               <button
                 class="card-show-more-btn"
@@ -72,9 +70,9 @@
                   <!-- Btn to add movies to the watch-list -->
                   <button
                     class="watch-list-add-btn"
-                    v-on:click="addMovieToWatchList(movie)"
+                    v-on:click="removeMovieFromWatchList(movie)"
                   >
-                    <i class="fa-solid fa-plus"></i>
+                    <i class="fa-solid fa-minus"></i>
                   </button>
                   <!-- Movie duration and release date -->
                   <div class="card-duration-and-release-date">
@@ -102,8 +100,9 @@
             </div>
           </div>
           <!-- End of movie card -->
+          <!-- End of movie slider container -->
         </section>
-        <!-- End of movies section -->
+        <!-- End of watch-list section -->
 
     <!-- Toast component for messages of duplicate movies and max movies in watch list -->
     <ToastComponent />
@@ -115,13 +114,13 @@
 </template>
 
 <script>
-// CodeSpace API import
+// CodeSpace Movies API import
 import axios from "axios";
 
 // Top Navbar component import
 import TopNavBarComponent from "../components/TopNavBarComponent.vue";
 
-// Footer component import
+// // Footer component import
 import FooterComponent from "../components/FooterComponent.vue";
 
 // Toast import
@@ -137,27 +136,9 @@ export default {
     return {
       watchList: [],
       movies: [],
-      search: "",
-      actors: [],
     };
   },
-  computed: {
-     // Function for filtering only displaying movies that are available, and removing all coming soon movies
-    availableMoviesList() {
-      return this.movies.filter((movie) => movie.is_coming_soon == "0");
-    },
-    
-    // Search function to filter movies
-    filteredMovies() {
-      return this.movies.filter((movie) =>
-        this.movies.length
-          ? Object.keys(this.movies[0]).some((key) =>
-              ("" + movie[key]).toLowerCase().includes(this.search)
-            )
-          : true
-      );
-    },
-  },
+
   methods: {
     // Duplicate movie in watch list toast
     duplicateMovieAlert() {
@@ -177,7 +158,7 @@ export default {
       }, 3000);
     },
 
-      // Watch list movie successfully add toast
+    // Watch list movie successfully add toast
     watchListAddSuccessAlert() {
       var x = document.getElementById("snackbar3");
       x.className = "show";
@@ -205,15 +186,15 @@ export default {
         return;
       }
 
-        // Prevents coming soon movies in the watchList
+      // Prevents coming soon movies in the watchList
       if (movie.is_coming_soon == 1) {
         return;
       }
 
-     // Adding movies to the front of the watchList
+      // Adding movies to the front of the watchList
       if (this.watchList.unshift(movie)) {
         // Movie added message
-          this.watchListAddSuccessAlert();
+        this.watchListAddSuccessAlert();
       }
 
       // Save to local storage function
@@ -230,16 +211,15 @@ export default {
 
       this.saveMovieToLocalStorage();
     },
-    
+
     // Save movies to watch-list function
     saveMovieToLocalStorage() {
       const parsed = JSON.stringify(this.watchList);
       localStorage.setItem("movies-in-watch-list", parsed);
     },
   },
-
   mounted() {
-    // Finally display local storage in the DOM
+    // FInally display local storage movies in the dom
     if (localStorage.getItem("movies-in-watch-list")) {
       try {
         this.watchList = JSON.parse(
@@ -249,6 +229,7 @@ export default {
         localStorage.removeItem("movies-in-watch-list");
       }
     }
+
     // CodeSpace API import using axios
     axios
       .get("https://project-apis.codespace.co.za/api/movies")
@@ -261,141 +242,5 @@ export default {
 </script>
 
 <style lang="scss">
-// Page top back button
-.back-btn-and-header-container {
-  padding: 4% 0 0 4%;
-}
-
-// Back button Icon
-.fa-arrow-left {
-  font-size: 2rem;
-  margin-bottom: 4%;
-}
-
-// Page header
-.search-page-header {
-  font-size: calc(8px + 1vw);
-}
-
-// Searchbar container
-.search-container {
-  position: relative;
-  display: inline-block;
-  height: 40px;
-  width: 50px;
-  vertical-align: bottom;
-  left: 4%;
-  margin: 0.25vw 0 2vw 0;
-}
-
-// Searchbar placeholder text
-.search::placeholder {
-  color: grey;
-}
-
-// Top navbar search bar styling
-.button {
-  display: inline-block;
-  align-items: center;
-  margin: 4px 2px;
-  background-color: black;
-  border-radius: 4%;
-  font-size: 14px;
-  padding-left: 32px;
-  padding-right: 32px;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  color: white;
-  text-decoration: none;
-  cursor: pointer;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-// Search icon
-.mglass {
-  display: inline-block;
-  pointer-events: none;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-}
-
-// Search button icon
-.searchbutton {
-  position: absolute;
-  font-size: 2rem;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.search:focus + .searchbutton {
-  transition-duration: 0.4s;
-  -moz-transition-duration: 0.4s;
-  -webkit-transition-duration: 0.4s;
-  -o-transition-duration: 0.4s;
-  background-color: black;
-}
-
-// Searchbar input
-.search {
-  position: absolute;
-  left: 49px;
-  background: black;
-  color: #fff;
-  outline: none;
-  border: none;
-  padding: 0;
-  width: 363px;
-  height: 100%;
-  z-index: 10;
-}
-
-.search:focus {
-  border: 1px solid rgba(219, 219, 219, 0.89);
-}
-//End of top navbar search bar styling
-
-// MEDIA QUERIES
-@media screen and (min-width: 1601px) and (max-width: 1920px) {
-  //#
-}
-
-@media screen and (min-width: 1281px) and (max-width: 1600px) {
-  /* Top page back button */
-  .fa-arrow-left {
-    margin-top: 15px;
-    font-size: 2rem;
-  }
-}
-
-@media screen and (min-width: 841px) and (max-width: 1280px) {
-  /* Top page back button */
-  .fa-arrow-left {
-    margin-top: 25px;
-    font-size: 1.9rem;
-  }
-}
-
-@media screen and (min-width: 481px) and (max-width: 840px) {
-  /* Top page back button */
-  .fa-arrow-left {
-    margin-top: 40px;
-    font-size: 1.75rem;
-  }
-}
-
-@media screen and (min-width: 0) and (max-width: 480px) {
-  /* Top page back button */
-  .fa-arrow-left {
-    margin-top: 50px;
-    font-size: 1.5rem;
-  }
-}
+// STYLING AND MEDIA QUERIES for the back button are on FilteredMovies.vue
 </style>
