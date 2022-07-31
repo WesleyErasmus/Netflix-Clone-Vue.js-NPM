@@ -30,80 +30,81 @@
         >
       </form>
     </div>
+    <!-- Clear watch list button -->
+    <button @click="clearWatchList" class="clear-watch-list-btn">
+      Clear watch list
+    </button>
 
-   <!-- Watch list section wrapper -->
-        <section id="watchList" class="movie-slider-container row">
-          <!-- Movie slider nesting all "looped-over" slider items -->
-          <!-- Slider card items -->
-          <div class="card" v-for="(movie, id) in filteredMovies" :key="id">
-            <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
-            <img
-              class="card-img-top"
-              :src="'https://picsum.photos/200/300?' + movie.id"
-            />
+    <!-- Watch list section wrapper -->
+    <section id="watchList" class="movie-slider-container row">
+      <!-- Movie slider nesting all "looped-over" slider items -->
+      <!-- Slider card items -->
+      <div class="card" v-for="(movie, id) in filteredMovies" :key="id">
+        <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
+        <img
+          class="card-img-top"
+          :src="'https://picsum.photos/200/300?' + movie.id"
+        />
 
-            <!-- Adding coming soon banner conditionally to all "coming soon movies"  -->
-            <div
-              v-if="movie.is_coming_soon == 1"
-              :class="{
-                comingSoonThumbnailBanner: movie.is_coming_soon == 1,
-              }"
-            >
-              COMING SOON
-            </div>
+        <!-- Adding coming soon banner conditionally to all "coming soon movies"  -->
+        <div
+          v-if="movie.is_coming_soon == 1"
+          :class="{
+            comingSoonThumbnailBanner: movie.is_coming_soon == 1,
+          }"
+        >
+          COMING SOON
+        </div>
 
-            <!-- Watch-list card body -->
-             <!-- Movie card body -->
-            <div class="card-body">
+        <!-- Watch-list card body -->
+        <!-- Movie card body -->
+        <div class="card-body">
+          <button class="card-show-more-btn" v-on:click="movie.SH = !movie.SH">
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="card-inner-body">
+            <!-- Movie card title -->
+            <div class="card-title">{{ movie.name }}</div>
+
+            <div v-show="movie.SH" class="v-show-start">
+              <!-- Btn to add movies to the watch-list -->
               <button
-                class="card-show-more-btn"
-                 v-on:click="movie.SH = !movie.SH"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Remove from your watch list"
+                class="watch-list-add-btn"
+                v-on:click="removeMovieFromWatchList(movie)"
               >
-                <i class="fa-solid fa-chevron-down"></i>
+                <i class="fa-solid fa-minus"></i>
               </button>
-              <div class="card-inner-body">
-                <!-- Movie card title -->
-                <div class="card-title">{{ movie.name }}</div>
-
-               <div v-show="movie.SH"
-                class="v-show-start">
-                  <!-- Btn to add movies to the watch-list -->
-                  <button
-                   data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from your watch list"
-                    class="watch-list-add-btn"
-                    v-on:click="removeMovieFromWatchList(movie)"
-                  >
-                    <i class="fa-solid fa-minus"></i>
-                  </button>
-                  <!-- Movie duration and release date -->
-                  <div class="card-duration-and-release-date">
-                    <div>{{ movie.duration }}m</div>
-                    <div>{{ movie.release_date }}</div>
-                  </div>
-
-                  <div class="rating">Rating: {{ movie.rating }} / 10</div>
-                  <!-- Movie description -->
-                  <div class="card-description">{{ movie.description }}</div>
-                  <!-- Movie actors -->
-                  <h6 class="actor-heading">Cast:</h6>
-                  <!-- V-for to loop through the actors nested array -->
-                  <div v-for="actor in movie.actors" :key="actor.id">
-                    <!-- Actor names -->
-                    <div class="actor-name">
-                      {{ actor.first_name }} {{ actor.last_name }}
-                    </div>
-                  </div>
-                </div>
-                <!-- End of v-show -->
-                
+              <!-- Movie duration and release date -->
+              <div class="card-duration-and-release-date">
+                <div>{{ movie.duration }}m</div>
+                <div>{{ movie.release_date }}</div>
               </div>
-              <!-- end of inner body -->
+
+              <div class="rating">Rating: {{ movie.rating }} / 10</div>
+              <!-- Movie description -->
+              <div class="card-description">{{ movie.description }}</div>
+              <!-- Movie actors -->
+              <h6 class="actor-heading">Cast:</h6>
+              <!-- V-for to loop through the actors nested array -->
+              <div v-for="actor in movie.actors" :key="actor.id">
+                <!-- Actor names -->
+                <div class="actor-name">
+                  {{ actor.first_name }} {{ actor.last_name }}
+                </div>
+              </div>
             </div>
+            <!-- End of v-show -->
           </div>
-          <!-- End of movie card -->
-          <!-- End of movie slider container -->
-        </section>
-        <!-- End of watch-list section -->
+          <!-- end of inner body -->
+        </div>
+      </div>
+      <!-- End of movie card -->
+      <!-- End of movie slider container -->
+    </section>
+    <!-- End of watch-list section -->
 
     <!-- Toast component for messages of duplicate movies and max movies in watch list -->
     <ToastComponent />
@@ -140,7 +141,7 @@ export default {
       search: "",
     };
   },
-   computed: {
+  computed: {
     // Search function to filter movies in the watch list
     filteredMovies() {
       return this.watchList.filter((movie) =>
@@ -230,6 +231,14 @@ export default {
       const parsed = JSON.stringify(this.watchList);
       localStorage.setItem("movies-in-watch-list", parsed);
     },
+
+    // Clear watch list
+    clearWatchList () {
+      if (localStorage.length > 0) {
+        localStorage.removeItem("movies-in-watch-list")
+      }
+      window.location.reload()
+    },
   },
   mounted() {
     // FInally display local storage movies in the dom
@@ -256,4 +265,25 @@ export default {
 
 <style lang="scss">
 // STYLING AND MEDIA QUERIES for the back button are on FilteredMovies.vue
+
+// Clear watch-list button
+.clear-watch-list-btn {
+  z-index: 20;
+  float: right;
+  position: relative;
+  bottom: 0vw;
+  font-size: calc(7px + 0.5vw);
+  background: transparent;
+  background: rgba(0, 0, 0, 0.793);
+  padding: 0.7rem 1rem;
+  border: #141414 1px solid;
+  margin-right: 4%;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
+  text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.clear-watch-list-btn:hover {
+  color: var(--primary-color);
+}
 </style>

@@ -112,15 +112,18 @@
             <!-- Offcanvas body menu-->
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                  <!-- Home page link to app home page -->
-                  <router-link :to="{ path: '/' }">
-                    <a class="nav-link active" aria-current="page"
-                      >Back to top</a
-                    ></router-link
-                  >
+                <router-link :to="{ path: '/' }">
+                 <!-- Home page link to app home page -->
+                 <li class="nav-item">
+                    Home
                 </li>
-
+                </router-link>
+                <li class="nav-item">
+                  <!-- Back to top of page btn -->
+                    <a href="#" class="nav-link active" aria-current="page"
+                      >Back to top</a
+                    >
+                </li>
                 <!-- Link to search page -->
                 <router-link :to="{ path: '/search' }">
                   <li class="nav-item">Search</li>

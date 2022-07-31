@@ -14,11 +14,7 @@
       <div class="movies-and-footer-container">
         <!-- Watch-list section heading -->
         <h1 class="my-list-heading">
-          My Watch List 
-            <button @click="clearWatchList"
-            class="clear-watch-list-btn">
-              Clear watch list
-            </button>
+          My Watch List
         </h1>
         
         <!-- Watch list section wrapper -->
@@ -344,7 +340,6 @@ export default {
 :root {
   --primary-color: #e50914;
   --transparent-black-bg: rgba(0, 0, 0, 0.75);
-  // font-size: calc(16px + (24 - 16)*(100vw - 320px)/(1920 - 320));
 }
 
 // Universal placeholder styling
@@ -423,14 +418,20 @@ body {
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
+// Clear watch-list button
 .clear-watch-list-btn {
-  position: absolute;
-  right: 4%;
-  font-size: calc(6px + 0.4vw);
-  background: #1c1b1bd6;
-  padding: 0.6rem 1rem;
-  border-radius: 3px;
-  color: #fff;
+  z-index: 20;
+  float: right;
+  position: relative;
+  bottom: 0vw;
+  font-size: calc(7px + 0.5vw);
+  background: transparent;
+  background: rgba(0, 0, 0, 0.793);
+  padding: 0.7rem 1rem;
+  border: #141414 1px solid;
+  margin-right: 4%;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
