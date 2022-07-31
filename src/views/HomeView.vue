@@ -13,8 +13,14 @@
       <!-- Used to simplify screen responsiveness -->
       <div class="movies-and-footer-container">
         <!-- Watch-list section heading -->
-        <h1 class="my-list-heading">My Watch List</h1>
-
+        <h1 class="my-list-heading">
+          My Watch List 
+            <button @click="clearWatchList"
+            class="clear-watch-list-btn">
+              Clear watch list
+            </button>
+        </h1>
+        
         <!-- Watch list section wrapper -->
         <section id="watchList" class="movie-slider-container row">
           <!-- Movie slider nesting all "looped-over" slider items -->
@@ -54,6 +60,7 @@
                 class="v-show-start">
                   <!-- Btn to add movies to the watch-list -->
                   <button
+                  data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from your watch list"
                     class="watch-list-add-btn"
                     v-on:click="removeMovieFromWatchList(movie)"
                   >
@@ -132,6 +139,7 @@
                 v-show="movie.showHide">
                   <!-- Btn to add movies to the watch-list -->
                   <button
+                  data-bs-toggle="tooltip" data-bs-placement="top" title="Add to your watch list"
                     class="watch-list-add-btn"
                     v-on:click="addMovieToWatchList(movie)"
                   >
@@ -180,7 +188,7 @@
 </template>
 
 <script>
-// CodeSpace Movies API import
+//Axios to fetch CodeSpace Movies API data
 import axios from "axios";
 // IMPORTED COMPONENTS
 
@@ -256,13 +264,13 @@ export default {
       if (this.watchList.some((e) => e == movie)) {
         this.duplicateMovieAlert();
         return;
-      }
+      } 
 
       // Prevents coming soon movies in the watchList
       if (movie.is_coming_soon == 1) {
         return;
       }
-
+      
       // Adding movies to the front of the watchList
       if (this.watchList.unshift(movie)) {
         // Movie added message
@@ -289,6 +297,14 @@ export default {
       const parsed = JSON.stringify(this.watchList);
       localStorage.setItem("movies-in-watch-list", parsed);
     },
+
+    // Clear watch list
+    clearWatchList () {
+      if (localStorage.length > 0) {
+        localStorage.removeItem("movies-in-watch-list")
+      }
+      window.location.reload()
+    }
   },
   computed: {
     // Function for filtering only displaying movies that are available, and removing all coming soon movies
@@ -405,6 +421,21 @@ body {
   margin-bottom: 0rem;
   padding-bottom: 0;
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.clear-watch-list-btn {
+  position: absolute;
+  right: 4%;
+  font-size: calc(6px + 0.4vw);
+  background: #1c1b1bd6;
+  padding: 0.6rem 1rem;
+  border-radius: 3px;
+  color: #fff;
+  text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.clear-watch-list-btn:hover {
+  color: var(--primary-color);
 }
 
 // Watch-list remove btn

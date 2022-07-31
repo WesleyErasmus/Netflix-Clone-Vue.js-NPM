@@ -36,7 +36,7 @@
           <!-- Movie item -->
           <div
             class="card"
-            v-for="movie in availableMoviesList"
+            v-for="movie in filteredMovies"
             v-bind:key="movie.id"
           >
             <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
@@ -149,7 +149,8 @@ export default {
     
     // Search function to filter movies
     filteredMovies() {
-      return this.movies.filter((movie) =>
+      // Calling this.availableMoviesList accesses the computed function above which filters out all the coming soon movies. Resulting in searching only through availible movies
+      return this.availableMoviesList.filter((movie) =>
         this.movies.length
           ? Object.keys(this.movies[0]).some((key) =>
               ("" + movie[key]).toLowerCase().includes(this.search)

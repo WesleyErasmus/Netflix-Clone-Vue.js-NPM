@@ -35,7 +35,7 @@
         <section id="watchList" class="movie-slider-container row">
           <!-- Movie slider nesting all "looped-over" slider items -->
           <!-- Slider card items -->
-          <div class="card" v-for="(movie, id) in watchList" :key="id">
+          <div class="card" v-for="(movie, id) in filteredMovies" :key="id">
             <!-- Looping though link using movie id(index) to render a unique images for each movie instance -->
             <img
               class="card-img-top"
@@ -57,7 +57,7 @@
             <div class="card-body">
               <button
                 class="card-show-more-btn"
-                v-on:click="movie.showHide = !movie.showHide"
+                 v-on:click="movie.SH = !movie.SH"
               >
                 <i class="fa-solid fa-chevron-down"></i>
               </button>
@@ -65,10 +65,11 @@
                 <!-- Movie card title -->
                 <div class="card-title">{{ movie.name }}</div>
 
-                <div v-show="movie.showHide"
+               <div v-show="movie.SH"
                 class="v-show-start">
                   <!-- Btn to add movies to the watch-list -->
                   <button
+                   data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from your watch list"
                     class="watch-list-add-btn"
                     v-on:click="removeMovieFromWatchList(movie)"
                   >
@@ -136,9 +137,21 @@ export default {
     return {
       watchList: [],
       movies: [],
+      search: "",
     };
   },
-
+   computed: {
+    // Search function to filter movies in the watch list
+    filteredMovies() {
+      return this.watchList.filter((movie) =>
+        this.watchList.length
+          ? Object.keys(this.watchList[0]).some((key) =>
+              ("" + movie[key]).toLowerCase().includes(this.search)
+            )
+          : true
+      );
+    },
+  },
   methods: {
     // Duplicate movie in watch list toast
     duplicateMovieAlert() {
