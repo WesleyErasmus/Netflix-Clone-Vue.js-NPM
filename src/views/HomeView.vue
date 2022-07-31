@@ -293,14 +293,6 @@ export default {
       const parsed = JSON.stringify(this.watchList);
       localStorage.setItem("movies-in-watch-list", parsed);
     },
-
-    // Clear watch list
-    clearWatchList () {
-      if (localStorage.length > 0) {
-        localStorage.removeItem("movies-in-watch-list")
-      }
-      window.location.reload()
-    }
   },
   computed: {
     // Function for filtering only displaying movies that are available, and removing all coming soon movies
@@ -416,27 +408,6 @@ body {
   margin-bottom: 0rem;
   padding-bottom: 0;
   text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
-// Clear watch-list button
-.clear-watch-list-btn {
-  z-index: 20;
-  float: right;
-  position: relative;
-  bottom: 0vw;
-  font-size: calc(7px + 0.5vw);
-  background: transparent;
-  background: rgba(0, 0, 0, 0.793);
-  padding: 0.7rem 1rem;
-  border: #141414 1px solid;
-  margin-right: 4%;
-  border-radius: 5px;
-  color: rgb(255, 255, 255);
-  text-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
-.clear-watch-list-btn:hover {
-  color: var(--primary-color);
 }
 
 // Watch-list remove btn
