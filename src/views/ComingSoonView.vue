@@ -5,7 +5,7 @@
     <!-- NAVBAR COMPONENT -->
 
     <!-- Back arrow link to home page -->
-    <router-link :to="{ path: '/' }">
+    <router-link :to="{ path: '/home' }">
       <i id="back-arrow" class="fa-solid fa-arrow-left"></i>
     </router-link>
 

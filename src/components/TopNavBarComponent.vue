@@ -7,7 +7,7 @@
         <div class="container-fluid top-navbar-inner">
           <div class="app-logo-and-menu-flex-container">
             <!-- Home page Netflix logo. Links to home page -->
-            <router-link :to="{ path: '/' }">
+            <router-link :to="{ path: '/home' }">
               <img
                 id="home-page-back-to-top"
                 class="home-gage-app-logo"
@@ -62,7 +62,7 @@
               <span class="sign-out-dropdown"></span>
               <div class="dropdown-content">
                 <!-- Sign-out link to About Page  -->
-                <router-link :to="{ path: '/login' }">
+                <router-link :to="{ path: '/' }">
                   <button class="home-page-sign-out-btn">Sign out</button>
                 </router-link>
               </div>
@@ -112,7 +112,7 @@
             <!-- Offcanvas body menu-->
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <router-link :to="{ path: '/' }">
+                <router-link :to="{ path: '/home' }">
                  <!-- Home page link to app home page -->
                  <li class="nav-item">
                     Home
@@ -149,7 +149,7 @@
 
                 <!-- Link to login page -->
                 <li class="nav-item">
-                  <router-link :to="{ path: '/login' }">
+                  <router-link :to="{ path: '/' }">
                     <a
                       class="nav-link active offcanvas-sign-out"
                       aria-current="page"

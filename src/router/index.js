@@ -9,16 +9,16 @@ import WatchListView from "../views/WatchListView.vue"
 
 const routes = [
   {
-    // this is my home page
-    path: "/",
-    name: "home",
-    component: HomeView,
-  },
-  {
     // this will be my login page
-    path: "/login",
+    path: "/",
     name: "login",
     component: LogInView,
+  },
+  {
+    // this is my home page
+    path: "/home",
+    name: "home",
+    component: HomeView,
   },
   {
     // this will be my Coming Soon page

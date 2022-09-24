@@ -59,7 +59,7 @@
           </p>
 
           <!-- Sign-in btn link to Home Page  -->
-          <router-link :to="{ path: '/' }">
+          <router-link :to="{ path: '/home' }">
             <!-- Button is disabled until form validation is true -->
             <button
               :disabled="v$.form.$invalid"
@@ -156,8 +156,9 @@ font-family: 'Open Sans', sans-serif; */
 
 /* Form validation required messages */
 .error-message {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.738);
+  font-size: 14px;
+  // color: rgba(255, 255, 255, 0.738);
+  color: rgb(226, 34, 34);
 }
 
 /* About body styling */

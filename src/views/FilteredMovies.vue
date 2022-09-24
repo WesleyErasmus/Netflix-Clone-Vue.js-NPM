@@ -6,7 +6,7 @@
 
     <!-- Header back btn -->
     <div class="back-btn-and-header-container">
-      <router-link :to="{ path: '/' }">
+      <router-link :to="{ path: '/home' }">
         <i class="fa-solid fa-arrow-left"></i>
       </router-link>
       <h1 class="search-page-header">Search for Movies</h1>
